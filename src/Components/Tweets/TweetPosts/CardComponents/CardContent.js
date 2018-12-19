@@ -17,12 +17,12 @@ const CardContentWrapper = styled.div`
 `
 
 
-const CardContent = () => {
+const CardContent = ({ secondTitle, secondSubTitle }) => {
 
   return (
     <CardContentWrapper>
-      <h2>Get Started with React</h2>
-      <p>React makes it painless to create interactive Uis. Design simple views for each state in your application</p>
+      <h2>{secondTitle}</h2>
+      <p>{secondSubTitle}</p>
       <a href="....">reactjs.org</a>
     </CardContentWrapper>
   )

@@ -16,15 +16,25 @@ display: flex;
 
 `
 
-const HeaderContainer = () => (
-  <HeaderWrapper>
-    <ImageThumbnail />
-    <div className="wrapper">
-      <HeaderTitle />
-      <HeaderContent />
-    </div>
-  </HeaderWrapper>
-)
+const HeaderContainer = ({
+  icon,
+  title,
+  subtitle,
+  date, }) => (
+    <HeaderWrapper>
+      <ImageThumbnail
+        icon={icon}
+      />
+      <div className="wrapper">
+        <HeaderTitle
+          title={title}
+          subtitle={subtitle}
+          date={date}
+        />
+        <HeaderContent />
+      </div>
+    </HeaderWrapper>
+  )
 
 export default HeaderContainer;
 

@@ -17,10 +17,10 @@ h2 {
 }
 `
 
-const HeaderTitle = () => (
+const HeaderTitle = ({ title, subtitle, date }) => (
   <HeaderWrapper>
-    <h2>Lambda School</h2>
-    <h2>@LambdaSchool - <span>{moment().format('MMMM Do YYYY')}</span>  </h2>
+    <h2>{title}</h2>
+    <h2>{subtitle} <span>{date}</span>  </h2>
   </HeaderWrapper>
 )
 

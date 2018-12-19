@@ -12,12 +12,21 @@ const Cards = styled.div`
 `
 
 
-const CardContainer = () => {
+const CardContainer = ({
+  image,
+  secondTitle,
+  secondSubTitle,
+}) => {
 
   return (
     <Cards className="wrapper">
-      <CardBanner />
-      <CardContent />
+      <CardBanner
+        image={image}
+      />
+      <CardContent
+        secondTitle={secondTitle}
+        secondSubTitle={secondSubTitle}
+      />
     </Cards>
   );
 }
