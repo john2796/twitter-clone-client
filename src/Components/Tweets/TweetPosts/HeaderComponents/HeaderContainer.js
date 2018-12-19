@@ -8,7 +8,7 @@ import HeaderContent from './HeaderContent';
 const HeaderWrapper = styled.div`
 display: flex;
   .wrapper { 
-    max-width: 600px;
+    max-width: 550px;
     margin: 0 auto;
   }
 

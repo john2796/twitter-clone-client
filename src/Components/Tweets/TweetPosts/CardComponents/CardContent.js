@@ -16,6 +16,7 @@ const CardContentWrapper = styled.div`
   }
 `
 
+
 const CardContent = () => (
   <CardContentWrapper>
     <h2>Get started with React</h2>

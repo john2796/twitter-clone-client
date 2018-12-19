@@ -4,8 +4,6 @@ import Tweets from '../../Components/Tweets/Tweets';
 
 const MainWrapper = styled.div`
   background: #f7f7f7;
-  height: auto;
-  min-height: 100%;
   margin-top: -21px;
 
 .wrapper {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Tweet from './Tweet';
+import Post from './TweetPosts/Post/Post';
 
 const TweetsFormWrapper = styled.div`
 input[type="text"], textarea {
@@ -59,8 +60,8 @@ class TweetsForm extends Component {
         currentItem: { name: '', tweet: '', key: '' }
       });
     }
-    //  console.log(this.state.currentItem)
-    //    console.log(this.state.items)
+    console.log(this.state.currentItem)
+    console.log(this.state.items)
   }
 
 
@@ -112,6 +113,10 @@ class TweetsForm extends Component {
         </form>
         <h1>Tweet posts</h1>
         {tweetPost}
+        <Post />
+        <Post />
+        <Post />
+        <Post />
         <hr />
       </TweetsFormWrapper >
     );

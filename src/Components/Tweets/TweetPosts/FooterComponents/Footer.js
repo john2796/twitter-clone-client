@@ -49,19 +49,19 @@ class Footer extends Component {
     const { likes, isLiked } = this.state;
     return (
       <FooterWrapper>
-        <p><i class="far fa-comment"></i></p>
+        <p><i className="far fa-comment"></i></p>
         <p>
-          <i class="fas fa-sync-alt"></i><span>6</span>
+          <i className="fas fa-sync-alt"></i><span>6</span>
         </p>
         <p>
 
-          <i class="fas fa-heart"
+          <i className="fas fa-heart"
             onClick={this.likedHandler}
             style={isLiked ? { color: "red" } : { color: "gray" }}
           ></i><span>{likes}</span>
         </p>
         <p>
-          <i class="far fa-envelope"></i>
+          <i className="far fa-envelope"></i>
         </p>
 
 

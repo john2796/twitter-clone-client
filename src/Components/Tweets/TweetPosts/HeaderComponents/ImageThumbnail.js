@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Img = styled.img`
-  width: 50px;
+  width: 65px;
   height: 50px;
   padding: 0 10px;
-  margin-top: 15px;
+  margin-top: 70px;
 
 `
 
