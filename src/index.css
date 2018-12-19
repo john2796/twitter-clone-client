@@ -18,3 +18,7 @@ code {
   margin: 0 auto;
   /* text-decoration: line-through; */
 }
+
+* {
+  -webkit-tap-highlight-color: transparent !important;
+}

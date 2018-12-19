@@ -44,17 +44,15 @@ class TweetsForm extends Component {
   state = {
     items: [],
     currentItem: {
-      name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a'), done: false
+      name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a'),
     },
     timeStamp: moment().format('MMMM Do YYYY'),
-    randomIndex: '',
-
+    clicked: false
   }
 
   handleInput = (name, e) => {
     const currentItem = { ...this.state.currentItem };
     currentItem[name] = e.target.value;
-
     this.setState({ currentItem });
   }
 
@@ -67,9 +65,13 @@ class TweetsForm extends Component {
       const items = [...this.state.items, newItem]
       this.setState({
         items,
-        currentItem: { name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a') },
+        currentItem: {
+          name: '',
+          tweet: '',
+          key: moment().format('MMMM Do YYYY, h:mm:ss a'),
+          clicked: true,
 
-
+        },
       });
     }
 
@@ -88,45 +90,21 @@ class TweetsForm extends Component {
   }
 
 
-  checkHandler = name => {
-    console.log('clicked')
-    this.setState({
-      items: this.state.items.map(item => {
-        console.log('item name', item.name);
-        console.log('name', name);
-        if (item.name === name) {
-          console.log(item.done)
-          item.done = !item.done;
-        }
-        return item;
-      }),
-    });
-  };
-
-
-
 
   render() {
     const {
-      currentItem: { name, tweet, key, done },
+      currentItem: { name, tweet, clicked },
       items,
       timeStamp,
-      randomIndex,
 
     } = this.state;
-    //random images post
-    const imgArr = ['mikko', 'miranda', 'pogi', 'best', 'react', 'developer'];
-    const randomImages = imgArr[randomIndex]
-
-    const tweetPost = items.map((item, i, ) => (
+    const tweetPost = items.map((item, i) => (
       <Tweet
         deleteItem={this.deleteItem}
         item={item}
         key={i}
         timeStamp={timeStamp}
-        randomImages={randomImages}
-        checkHandler={() => this.checkHandler(item.name)}
-        done={done}
+        clicked={clicked}
       />
     ))
     return (
