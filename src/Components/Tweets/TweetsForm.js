@@ -44,16 +44,18 @@ class TweetsForm extends Component {
   state = {
     items: [],
     currentItem: {
-      name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a'),
+      name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a'), clicked: false
+      ,
     },
     timeStamp: moment().format('MMMM Do YYYY'),
-    clicked: false
   }
 
   handleInput = (name, e) => {
     const currentItem = { ...this.state.currentItem };
     currentItem[name] = e.target.value;
-    this.setState({ currentItem });
+    this.setState({
+      currentItem,
+    });
   }
 
   addItem = (event) => {
@@ -70,7 +72,6 @@ class TweetsForm extends Component {
           tweet: '',
           key: moment().format('MMMM Do YYYY, h:mm:ss a'),
           clicked: true,
-
         },
       });
     }
@@ -93,9 +94,10 @@ class TweetsForm extends Component {
 
   render() {
     const {
-      currentItem: { name, tweet, clicked },
+      currentItem: { name, tweet },
       items,
       timeStamp,
+      clicked
 
     } = this.state;
     const tweetPost = items.map((item, i) => (
