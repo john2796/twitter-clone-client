@@ -10,7 +10,10 @@ const Cards = styled.div`
   max-width: 500px;
   margin: 0 auto;
 `
+
+
 const CardContainer = () => {
+
   return (
     <Cards className="wrapper">
       <CardBanner />

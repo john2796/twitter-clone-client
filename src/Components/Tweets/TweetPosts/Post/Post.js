@@ -8,12 +8,13 @@ const PostWrapper = styled.div`
   margin-bottom: 50px;
 `
 
-const Post = () => (
-  <PostWrapper>
-    <HeaderContainer />
-    <CardContainer />
-    <Footer />
-  </PostWrapper>
-)
-
+const Post = () => {
+  return (
+    <PostWrapper>
+      <HeaderContainer />
+      <CardContainer />
+      <Footer />
+    </PostWrapper>
+  )
+}
 export default Post;

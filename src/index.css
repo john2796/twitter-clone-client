@@ -16,4 +16,5 @@ code {
 .wrapper {
   max-width: 700px;
   margin: 0 auto;
+  /* text-decoration: line-through; */
 }

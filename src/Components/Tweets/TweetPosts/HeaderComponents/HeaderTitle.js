@@ -20,7 +20,7 @@ h2 {
 const HeaderTitle = () => (
   <HeaderWrapper>
     <h2>Lambda School</h2>
-    <h2>@LambdaSchool - <span>{moment().format('MMMM Do YYYY, h:mm:ssa')}</span>  </h2>
+    <h2>@LambdaSchool - <span>{moment().format('MMMM Do YYYY')}</span>  </h2>
   </HeaderWrapper>
 )
 

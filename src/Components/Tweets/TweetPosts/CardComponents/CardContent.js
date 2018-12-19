@@ -17,12 +17,14 @@ const CardContentWrapper = styled.div`
 `
 
 
-const CardContent = () => (
-  <CardContentWrapper>
-    <h2>Get started with React</h2>
-    <p>React makes it painless to create interactive Uis. Design simple views for each state in your application</p>
-    <a href="....">reactjs.org</a>
-  </CardContentWrapper>
-)
+const CardContent = () => {
 
+  return (
+    <CardContentWrapper>
+      <h2>Get Started with React</h2>
+      <p>React makes it painless to create interactive Uis. Design simple views for each state in your application</p>
+      <a href="....">reactjs.org</a>
+    </CardContentWrapper>
+  )
+}
 export default CardContent;
