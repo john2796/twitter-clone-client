@@ -44,8 +44,7 @@ class TweetsForm extends Component {
   state = {
     items: [],
     currentItem: {
-      name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a'), clicked: false
-      ,
+      name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a'),
     },
     timeStamp: moment().format('MMMM Do YYYY'),
   }
@@ -71,13 +70,12 @@ class TweetsForm extends Component {
           name: '',
           tweet: '',
           key: moment().format('MMMM Do YYYY, h:mm:ss a'),
-          clicked: true,
         },
       });
     }
 
-    console.log(this.state.currentItem)
-    console.log(this.state.items)
+    // console.log(this.state.currentItem)
+    // console.log(this.state.items)
   }
 
 
@@ -101,13 +99,18 @@ class TweetsForm extends Component {
 
     } = this.state;
     const tweetPost = items.map((item, i) => (
-      <Tweet
-        deleteItem={this.deleteItem}
-        item={item}
-        key={i}
-        timeStamp={timeStamp}
-        clicked={clicked}
-      />
+      console.log(item)
+      // <Post
+      //   item={item}
+      //   key={i}
+      // />
+      // <Tweet
+      //   deleteItem={this.deleteItem}
+      //   item={item}
+      //   key={i}
+      //   timeStamp={timeStamp}
+      //   clicked={clicked}
+      // />
     ))
     return (
       <TweetsFormWrapper>

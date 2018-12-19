@@ -8,7 +8,7 @@ const PostWrapper = styled.div`
   margin-bottom: 50px;
 `
 
-const Post = () => {
+const Post = ({ item: name }) => {
   return (
     <PostWrapper>
       <HeaderContainer />
