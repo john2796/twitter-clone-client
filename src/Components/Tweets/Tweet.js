@@ -1,11 +1,11 @@
 import React from 'react';
 
 
-const Tweet = ({ item: { name, tweet, key }, deleteItem, timeStamp, randomImages, strikeHandler, isStriked }) => (
+const Tweet = ({ item: { name, tweet, key }, deleteItem, timeStamp, randomImages, checkHandler, done }) => (
   <li>
     <h1
-      onClick={strikeHandler}
-      style={isStriked ? { textDecoration: 'line-through' } : { textDecoration: "none" }}
+      onClick={checkHandler}
+      style={done ? { textDecoration: 'line-through' } : { textDecoration: "none" }}
     >{name}</h1>
     <p>{tweet}</p>
     <p>Timestamp : {timeStamp}</p>

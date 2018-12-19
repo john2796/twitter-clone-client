@@ -43,10 +43,12 @@ input[type="text"], textarea {
 class TweetsForm extends Component {
   state = {
     items: [],
-    currentItem: { name: '', tweet: '', key: "" },
+    currentItem: {
+      name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a'), done: false
+    },
     timeStamp: moment().format('MMMM Do YYYY'),
     randomIndex: '',
-    isStriked: false
+
   }
 
   handleInput = (name, e) => {
@@ -56,9 +58,9 @@ class TweetsForm extends Component {
     this.setState({ currentItem });
   }
 
-  addItem = (e) => {
-    e.preventDefault();
-    const randomIndex = Math.floor(Math.random() * 6);
+  addItem = (event) => {
+    event.preventDefault();
+    // const randomIndex = Math.floor(Math.random() * 6);
     const newItem = this.state.currentItem;
     if (newItem.name === '' || newItem.tweet === '') return;
     if (newItem.name !== '' && newItem.tweet !== '') {
@@ -66,7 +68,8 @@ class TweetsForm extends Component {
       this.setState({
         items,
         currentItem: { name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a') },
-        randomIndex
+
+
       });
     }
 
@@ -84,37 +87,46 @@ class TweetsForm extends Component {
     })
   }
 
-  strikeHandler = (i) => {
-    this.setState(prevState => {
-      return { isStriked: prevState.isStriked };
+
+  checkHandler = name => {
+    console.log('clicked')
+    this.setState({
+      items: this.state.items.map(item => {
+        console.log('item name', item.name);
+        console.log('name', name);
+        if (item.name === name) {
+          console.log(item.done)
+          item.done = !item.done;
+        }
+        return item;
+      }),
     });
-  }
+  };
+
 
 
 
   render() {
     const {
-      currentItem: { name, tweet },
+      currentItem: { name, tweet, key, done },
       items,
       timeStamp,
       randomIndex,
-      isStriked
+
     } = this.state;
-    console.log(isStriked)
     //random images post
     const imgArr = ['mikko', 'miranda', 'pogi', 'best', 'react', 'developer'];
     const randomImages = imgArr[randomIndex]
 
-    const tweetPost = items.map((item, i) => (
+    const tweetPost = items.map((item, i, ) => (
       <Tweet
         deleteItem={this.deleteItem}
         item={item}
         key={i}
         timeStamp={timeStamp}
         randomImages={randomImages}
-        isStriked={isStriked}
-        strikeHandler={this.strikeHandler}
-
+        checkHandler={() => this.checkHandler(item.name)}
+        done={done}
       />
     ))
     return (
