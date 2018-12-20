@@ -42,10 +42,7 @@ input[type="text"], textarea {
 
 `
 
-// let randomImageIndex = Math.floor(Math.random() * numImagesAvailable);
 
-// const image = "https://tk-assets.lambdaschool.com/fcd75197-7d12-46ec-bc9e-4130f34822fa_reactbackground.png";
-const icon = " https://tk-assets.lambdaschool.com/1c1b7262-cf23-4a9f-90b6-da0d3c74a5c6_lambdacrest.png"
 
 
 class TweetsForm extends Component {
@@ -91,7 +88,7 @@ class TweetsForm extends Component {
   componentDidMount() {
     //check if the data exist ! and only load it if data does not exists
     if (!localStorage.getItem('items')) {
-      //if it does not exist do this
+      //if it doesn't fetch data
       this.fetchData();
     } else {
       //if it exist do this
@@ -111,7 +108,7 @@ class TweetsForm extends Component {
           tweet: '',
           key: moment().format('MMMM Do YYYY, h:mm:ss a'),
           images: data
-        },
+        }
       }))
   }
   // third
@@ -126,6 +123,9 @@ class TweetsForm extends Component {
       items: filteredItems,
     })
   }
+
+
+
   render() {
     const {
       currentItem: { name, tweet },
@@ -134,7 +134,7 @@ class TweetsForm extends Component {
       isLoading
     } = this.state;
     const tweetPost = items.map((item) => (
-      isLoading ? (<img src="https://i.redd.it/ounq1mw5kdxy.gif" alt="loading" />) : (
+      isLoading ? (null) : (
         <Post
           key={item.key}
           icon={item.images}
