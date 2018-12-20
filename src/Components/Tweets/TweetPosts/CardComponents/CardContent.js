@@ -6,6 +6,7 @@ const CardContentWrapper = styled.div`
 
   h2 {
     font-size: 18px;
+    
   }
   p {
     font-size: 16px;

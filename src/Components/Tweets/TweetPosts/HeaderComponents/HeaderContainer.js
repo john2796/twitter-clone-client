@@ -14,16 +14,23 @@ display: flex;
 
 
 
+
+
 `
 
 const HeaderContainer = ({
   icon,
   title,
   subtitle,
-  date, }) => (
+  date,
+  message,
+  styleName
+
+}) => (
     <HeaderWrapper>
       <ImageThumbnail
         icon={icon}
+        styleName={styleName}
       />
       <div className="wrapper">
         <HeaderTitle
@@ -31,7 +38,9 @@ const HeaderContainer = ({
           subtitle={subtitle}
           date={date}
         />
-        <HeaderContent />
+        <HeaderContent
+          message={message}
+        />
       </div>
     </HeaderWrapper>
   )

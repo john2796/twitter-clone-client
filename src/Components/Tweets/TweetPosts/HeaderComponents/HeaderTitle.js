@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import moment from 'moment'
 
 
 const HeaderWrapper = styled.div`
 display: flex;
+align-items: center;
+margin: 0 auto;
+min-width: 550px;
+
+text-align: left;
+
+
 h2 {
   align-self: baseline;
   font-size: 17px;

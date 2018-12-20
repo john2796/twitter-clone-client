@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import TweetsForm from './TweetsForm';
 
 const TweetsWrapper = styled.div`
-height: 100vh;
 h2 { 
    padding: 50px 0 40px 0;
 }

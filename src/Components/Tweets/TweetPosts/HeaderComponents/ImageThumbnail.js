@@ -3,14 +3,12 @@ import styled from 'styled-components';
 
 const Img = styled.img`
   width: 65px;
-  height: 50px;
-  padding: 0 10px;
-  margin-top: 70px;
-
+  height: 65px;
+  margin-top: 58px;
 `
 
-const ImageThumbnail = ({ icon }) => (
-  <Img src={icon} alt="..." />
+const ImageThumbnail = ({ icon, styleName }) => (
+  <Img className={styleName} src={icon} alt="..." />
 )
 
 export default ImageThumbnail;

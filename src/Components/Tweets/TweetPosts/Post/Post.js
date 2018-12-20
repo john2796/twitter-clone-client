@@ -16,6 +16,14 @@ const Post = ({
   image,
   secondTitle,
   secondSubTitle,
+  message,
+  styleName,
+  comment,
+  envelope,
+  sync,
+  heart,
+  trash,
+  deleteItem
 }) => {
   return (
     <PostWrapper>
@@ -24,6 +32,8 @@ const Post = ({
         title={title}
         subtitle={subtitle}
         date={date}
+        message={message}
+        styleName={styleName}
 
       />
       <CardContainer
@@ -31,7 +41,14 @@ const Post = ({
         secondTitle={secondTitle}
         secondSubTitle={secondSubTitle}
       />
-      <Footer />
+      <Footer
+        comment={comment}
+        envelope={envelope}
+        sync={sync}
+        heart={heart}
+        trash={trash}
+        deleteItem={deleteItem}
+      />
     </PostWrapper>
   )
 }

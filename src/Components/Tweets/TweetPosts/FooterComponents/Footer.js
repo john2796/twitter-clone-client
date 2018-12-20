@@ -14,7 +14,15 @@ p{
   font-size: 19px;
   cursor: pointer;
   transition:ease-in 300ms;
+&:nth-of-type(4){
+  margin-right: 40px;
 
+}
+&:last-child {
+  &:hover {
+    color: #9F0725;
+  }
+}
   &:hover {
     color: darkblue;
   }
@@ -47,24 +55,29 @@ class Footer extends Component {
   }
   render() {
     const { likes, isLiked } = this.state;
+    const { comment, sync, heart, envelope, trash, deleteItem } = this.props;
     return (
       <FooterWrapper>
-        <p><i className="far fa-comment"></i></p>
+        <p><i className={`far fa-${comment}`}></i></p>
         <p>
-          <i className="fas fa-sync-alt"></i><span>6</span>
+          <i className={`fas fa-${sync}-alt`}></i><span>6</span>
         </p>
         <p>
 
-          <i className="fas fa-heart"
+          <i className={`fas fa-${heart}`}
             onClick={this.likedHandler}
             style={isLiked ? { color: "red" } : { color: "gray" }}
           ></i><span>{likes}</span>
         </p>
         <p>
-          <i className="far fa-envelope"></i>
+          <i className={`far fa-${envelope}`}></i>
         </p>
+        <p
+          onClick={deleteItem}
 
-
+        >
+          <i className={`fas fa-${trash}-alt`}></i>
+        </p>
       </FooterWrapper>
 
     );
