@@ -102,8 +102,6 @@ class TweetsForm extends Component {
       currentItem: { name, tweet },
       items,
       timeStamp,
-
-
     } = this.state;
     const tweetPost = items.map((item) => (
 
