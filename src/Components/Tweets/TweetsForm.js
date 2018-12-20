@@ -56,12 +56,10 @@ class TweetsForm extends Component {
     },
     timeStamp: moment().format('MMMM Do YYYY'),
     isLoading: true,
-
   }
 
   handleInput = (name, e) => {
     const currentItem = { ...this.state.currentItem };
-
     currentItem[name] = e.target.value;
     this.setState({
       currentItem,
@@ -81,8 +79,12 @@ class TweetsForm extends Component {
     //check if it exists on localStorage if it does set it to the state
     localStorage.getItem('items') && this.setState({
       items: JSON.parse(localStorage.getItem('items')),
-      isLoading: false
     })
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+    }, 1000);
   }
   // second
   componentDidMount() {
@@ -98,7 +100,7 @@ class TweetsForm extends Component {
 
   fetchData = () => {
     const newItem = this.state.currentItem;
-    const items = [...this.state.items, newItem]
+    const items = [newItem, ...this.state.items]
     fetch("https://picsum.photos/500/500/?random")
       .then(res => res.url)
       .then(data => this.setState({
@@ -108,8 +110,9 @@ class TweetsForm extends Component {
           tweet: '',
           key: moment().format('MMMM Do YYYY, h:mm:ss a'),
           images: data
-        }
+        },
       }))
+      .catch(error => console.log(error))
   }
   // third
   componentWillUpdate(nextProps, nextState) {
@@ -131,32 +134,32 @@ class TweetsForm extends Component {
       currentItem: { name, tweet },
       items,
       timeStamp,
-      isLoading
+      isLoading,
     } = this.state;
     const tweetPost = items.map((item) => (
-      isLoading ? (null) : (
-        <Post
-          key={item.key}
-          icon={item.images}
-          title={item.name}
-          subtitle="@Lambda School - "
-          message={item.tweet}
-          date={timeStamp}
-          image={item.images}
-          secondTitle="Get Started with React"
-          secondSubTitle="React makes it painless to create interactive UIs. Design simple views for each state in your application"
-          styleName="image"
-          deleteItem={() => { if (window.confirm('Are you sure you wish to delete this tweet?')) this.deleteItem(item.key) }}
-          comment="comment"
-          envelope="envelope"
-          sync="sync"
-          heart="heart"
-          trash="trash"
-        />
-      )
+      <Post
+        key={item.key}
+        icon={item.images}
+        title={item.name}
+        subtitle="@Lambda School - "
+        message={item.tweet}
+        date={timeStamp}
+        image={item.images}
+        secondTitle="Get Started with React"
+        secondSubTitle="React makes it painless to create interactive UIs. Design simple views for each state in your application"
+        styleName="image"
+        deleteItem={() => { if (window.confirm('Are you sure you wish to delete this tweet?')) this.deleteItem(item.key) }}
+        comment="comment"
+        envelope="envelope"
+        sync="sync"
+        heart="heart"
+        trash="trash"
+      />
+
     ))
     return (
       <TweetsFormWrapper>
+        {isLoading ? (<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="loading" />) : ('')}
         <form onSubmit={this.addItem}>
           <div className="form__inputs input__01">
             <label htmlFor="name">Your Name</label> <br />
@@ -224,7 +227,7 @@ class TweetsForm extends Component {
 
         <hr />
       </TweetsFormWrapper >
-    );
+    )
   }
 }
 
