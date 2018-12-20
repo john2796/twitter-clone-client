@@ -44,48 +44,80 @@ input[type="text"], textarea {
 
 // let randomImageIndex = Math.floor(Math.random() * numImagesAvailable);
 
-const image = "https://tk-assets.lambdaschool.com/fcd75197-7d12-46ec-bc9e-4130f34822fa_reactbackground.png";
+// const image = "https://tk-assets.lambdaschool.com/fcd75197-7d12-46ec-bc9e-4130f34822fa_reactbackground.png";
 const icon = " https://tk-assets.lambdaschool.com/1c1b7262-cf23-4a9f-90b6-da0d3c74a5c6_lambdacrest.png"
+
 
 class TweetsForm extends Component {
   state = {
     items: [],
     currentItem: {
-      name: '', tweet: '', key: moment().format('MMMM Do YYYY, h:mm:ss a'),
+      name: '',
+      tweet: '',
+      key: moment().format('MMMM Do YYYY, h:mm:ss a'),
+      images: "https://tk-assets.lambdaschool.com/fcd75197-7d12-46ec-bc9e-4130f34822fa_reactbackground.png"
     },
     timeStamp: moment().format('MMMM Do YYYY'),
+    isLoading: true,
+
   }
 
   handleInput = (name, e) => {
     const currentItem = { ...this.state.currentItem };
+
     currentItem[name] = e.target.value;
     this.setState({
       currentItem,
     });
-  }
 
+  }
   addItem = (event) => {
     event.preventDefault();
-    // const randomIndex = Math.floor(Math.random() * 6);
     const newItem = this.state.currentItem;
     if (newItem.name === '' || newItem.tweet === '') return;
     if (newItem.name !== '' && newItem.tweet !== '') {
-      const items = [...this.state.items, newItem]
-      this.setState({
+      this.fetchData();
+    }
+  }
+  // first
+  componentWillMount() {
+    //check if it exists on localStorage if it does set it to the state
+    localStorage.getItem('items') && this.setState({
+      items: JSON.parse(localStorage.getItem('items')),
+      isLoading: false
+    })
+  }
+  // second
+  componentDidMount() {
+    //check if the data exist ! and only load it if data does not exists
+    if (!localStorage.getItem('items')) {
+      //if it does not exist do this
+      this.fetchData();
+    } else {
+      //if it exist do this
+      console.log('Using data from localStorage')
+    }
+  }
+
+  fetchData = () => {
+    const newItem = this.state.currentItem;
+    const items = [...this.state.items, newItem]
+    fetch("https://picsum.photos/500/500/?random")
+      .then(res => res.url)
+      .then(data => this.setState({
         items,
         currentItem: {
           name: '',
           tweet: '',
           key: moment().format('MMMM Do YYYY, h:mm:ss a'),
+          images: data
         },
-      });
-    }
-
-    // console.log(this.state.currentItem)
-    // console.log(this.state.items)
+      }))
   }
-
-
+  // third
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('items', JSON.stringify(nextState.items));
+  }
   deleteItem = key => {
     const filteredItems = this.state.items.filter(item => {
       return item.key !== key
@@ -94,38 +126,34 @@ class TweetsForm extends Component {
       items: filteredItems,
     })
   }
-
-
-
   render() {
     const {
       currentItem: { name, tweet },
       items,
       timeStamp,
+      isLoading
     } = this.state;
     const tweetPost = items.map((item) => (
-
-      <Post
-        icon={icon}
-        title={item.name}
-        subtitle="@Lambda School - "
-        message={item.tweet}
-        date={timeStamp}
-        image={image}
-        secondTitle="Get Started with React"
-        secondSubTitle="React makes it painless to create interactive UIs. Design simple views for each state in your application"
-        styleName="image"
-        key={item.key}
-        deleteItem={() => { if (window.confirm('Are you sure you wish to delete this tweet?')) this.deleteItem(item.key) }}
-
-
-        comment="comment"
-        envelope="envelope"
-        sync="sync"
-        heart="heart"
-        trash="trash"
-      />
-
+      isLoading ? (<img src="https://i.redd.it/ounq1mw5kdxy.gif" alt="loading" />) : (
+        <Post
+          key={item.key}
+          icon={item.images}
+          title={item.name}
+          subtitle="@Lambda School - "
+          message={item.tweet}
+          date={timeStamp}
+          image={item.images}
+          secondTitle="Get Started with React"
+          secondSubTitle="React makes it painless to create interactive UIs. Design simple views for each state in your application"
+          styleName="image"
+          deleteItem={() => { if (window.confirm('Are you sure you wish to delete this tweet?')) this.deleteItem(item.key) }}
+          comment="comment"
+          envelope="envelope"
+          sync="sync"
+          heart="heart"
+          trash="trash"
+        />
+      )
     ))
     return (
       <TweetsFormWrapper>
@@ -159,7 +187,7 @@ class TweetsForm extends Component {
           subtitle="@Bacon ipsum - "
           message="Bacon ipsum dolor amet picanha tri-tip pancetta andouille bacon ham hock. Cupim pork chop fatback pork shankle, picanha leberkas pastrami buffalo bresaola chuck pig. Sausage turducken boudin buffalo kielbasa ball tip fatback pork ribeye turkey. Ham fatback landjaeger kielbasa turkey. Cow ham hock prosciutto pork short loin.!"
           date={timeStamp}
-          image="https://images.pexels.com/photos/196659/pexels-photo-196659.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+          image="https://cdn.pixabay.com/photo/2018/09/12/12/14/photographer-3672010__340.jpg"
           secondTitle="pork belly short ribs"
           secondSubTitle="ow pork belly short ribs turducken. Chicken shoulder tongue, tenderloin alcatra kielbasa strip steak. Landjaeger sirloin tongue leberkas. Rump porchetta bresaola, jerky pork pig ground round."
           comment="comment"
@@ -172,7 +200,7 @@ class TweetsForm extends Component {
           subtitle="@Pastrami ribeye - "
           message="Pastrami ribeye prosciutto spare ribs biltong pork short loin. T-bone prosciutto tri-tip, frankfurter meatloaf meatball ball tip drumstick tail bresaola chuck pastrami. Rump shankle chicken."
           date={timeStamp}
-          image="https://images.pexels.com/photos/326424/pexels-photo-326424.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+          image="https://cdn.pixabay.com/photo/2018/11/29/23/34/cat-3846780__340.jpg"
           secondTitle="belly hamburger"
           secondSubTitle=" pork belly hamburger frankfurter meatball ham. Tri-tip salami meatball cupim short ribs t-bone sirloin ham jowl shankle fatback beef ribs."
           comment="comment"
@@ -185,7 +213,7 @@ class TweetsForm extends Component {
           subtitle="@Alcatra  - "
           message="Alcatra pork chop tongue prosciutto meatloaf frankfurter strip steak chuck burgdoggen landjaeger. Jowl pig cow alcatra cupim ham fatback ribeye drumstick meatloaf meatball beef ribs burgdoggen. Chicken picanha turducken biltong ribeye tail ."
           date={timeStamp}
-          image="https://images.pexels.com/photos/34140/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+          image="https://cdn.pixabay.com/photo/2017/11/20/20/12/helicopter-2966569__340.jpg"
           secondTitle="landjaeger swine"
           secondSubTitle="landjaeger swine. Burgdoggen beef ribs bresaola pork loin prosciutto t-bone, beef ball tip tail fatback sirloin pork chop buffalo.!"
           comment="comment"

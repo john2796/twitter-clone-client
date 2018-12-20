@@ -5,6 +5,7 @@ const Img = styled.img`
   width: 65px;
   height: 65px;
   margin-top: 58px;
+  border-radius: 50%;
 `
 
 const ImageThumbnail = ({ icon, styleName }) => (
