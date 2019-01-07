@@ -32,3 +32,6 @@ app.use("/api/users", users);
 
 const port = process.env.PORT || 9000;
 app.listen(port, () => console.log(`server running on port ${port}`));
+
+// register http://localhost:9000/api/users/register
+// login http://localhost:9000/api/users/login
