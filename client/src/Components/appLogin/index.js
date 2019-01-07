@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./store/actions/authActions";
-import { Provider } from "react-redux";
-
-import store from "./store/store";
-import Navbar from "./components/layout/Navbar";
-import Landing from "./components/layout/Landing";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-import PrivateRoute from "./components/private-route/PrivateRoute";
-import Dashboard from "./components/dashboard/Dashboard";
+import { setCurrentUser, logoutUser } from "../../store/actions/authActions";
+import Landing from "./layout/Landing";
+import Login from "./auth/Login";
+import Dashboard from "./dashboard/Dashboard";
+import Register from "./auth/Register";
+import PrivateRoute from "./private-route/PrivateRoute";
+import store from "../../store/store";
+import setAuthToken from "../../utils/setAuthToken";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -35,19 +32,16 @@ if (localStorage.jwtToken) {
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <Router>
-          <div className="App">
-            <Navbar />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            </Switch>
-          </div>
-        </Router>
-      </Provider>
+      <Router>
+        <div className="App">
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+          <Switch>
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
