@@ -14,11 +14,14 @@ app.use(
 app.use(bodyParser.json());
 
 // connect mongodb
-const db = require("./config/keys");
+const db = require("./config/keys").MongoURI;
 mongoose
   .connect(
     db,
     { useNewUrlParser: true }
   )
   .then(() => console.log("MongoDB successfully connected"))
-  .cath(err => console.log(err));
+  .catch(err => console.log(err));
+
+const port = process.env.PORT || 9000;
+app.listen(port, () => console.log(`server running on port ${port}`));
