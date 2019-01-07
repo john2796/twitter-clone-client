@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const jwt = require("jasonwebtoken");
+const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
-const passport = require("passport");
+//const passport = require("passport");
 
 // load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -51,3 +51,55 @@ router.post("/register", (req, res) => {
 // @route   POST api/users/login
 // @desc    Login user and return JWT token
 // @access  Public
+router.post("/login", (req, res) => {
+  //form validation
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // check validation
+  if (!isValid) {
+    return res.status(400).send(errors);
+  }
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  User.findOne({ email }).then(user => {
+    // check if user exists
+    if (!user) {
+      return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+
+    //chech passward
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        //user method
+        // create jwt payload
+        const payload = {
+          id: user.id,
+          name: user.name
+        };
+
+        //sign token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          {
+            expiresIn: 31556926 // one year
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer" + token
+            });
+          }
+        );
+      } else {
+        return res
+          .status(400)
+          .json({ passwordincorrect: "Password incorrect" });
+      }
+    });
+  });
+});
+
+module.exports = router;
