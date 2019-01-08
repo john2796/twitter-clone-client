@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../../store/actions/authActions";
 import Navigation from "../../../Container/Navigation/Navigation";
 import Main from "../../../Container/Main/Main";
+import CommentBox from "./commentBox/CommentBox";
 
 class Dashboard extends Component {
   onLogoutClick = e => {
@@ -18,6 +19,7 @@ class Dashboard extends Component {
       <React.Fragment>
         <Navigation onLogoutClick={this.onLogoutClick} name={name} />
         <Main />
+        <CommentBox />
       </React.Fragment>
     );
   }
