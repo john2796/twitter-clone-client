@@ -28,13 +28,14 @@ mongoose
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
 
-//paspport middleware
+//paspport middleware registration
 app.use(passport.initialize());
 require("./config/passport")(passport);
 app.use("/api/users", users);
 
 // commentbox
-app.use("/api/commentbox", commentbox);
+app.use("/api", commentbox);
+//http://localhost:5000/api/comments
 
 //const port = process.env.PORT || 5000;
 app.listen(5000, () => console.log(`server running on port 5000`));

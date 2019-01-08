@@ -3,33 +3,42 @@ import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
 import "./CommentBox.css";
 
-const data = [
-  {
-    _id: 1,
-    author: "Bryan",
-    text: "Wow this is neat",
-    updatedAt: new Date(),
-    createdAt: new Date()
-  },
-  {
-    _id: 2,
-    author: "You",
-    text: "You're __right!__",
-    updatedAt: new Date(),
-    createdAt: new Date()
-  }
-];
-
 class CommentBox extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: []
+      data: [],
+      error: null,
+      author: "",
+      text: ""
     };
+    this.pollInterval = null;
   }
 
+  componentDidMount() {
+    this.loadCommentsFromServer();
+    if (!this.pollInterval) {
+      this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
+    }
+  }
+  componentWillMount() {
+    if (this.pollInterval) clearInterval(this.pollInterval);
+    this.pollInterval = null;
+  }
+
+  loadCommentsFromServer = () => {
+    fetch(`http://localhost:5000/api/comments`)
+      .then(data => data.json())
+      .then(res => {
+        if (!res.success) this.setState({ error: res.error });
+        else this.setState({ data: res.data });
+      });
+  };
+
   render() {
+    const { data, author, text, error } = this.state;
+
     return (
       <div>
         <div className="container">
@@ -38,8 +47,9 @@ class CommentBox extends Component {
             <CommentList data={data} />
           </div>
           <div className="form">
-            <CommentForm />
+            <CommentForm text={text} author={author} />
           </div>
+          {error && <p>{error}</p>}
         </div>
       </div>
     );
