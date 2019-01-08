@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
+import "./CommentBox.css";
 
 const data = [
   {
