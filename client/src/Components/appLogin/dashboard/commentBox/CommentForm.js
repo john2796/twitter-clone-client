@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const CommentForm = props => (
-  <form onSubmit={props.submitComment}>
+  <form onSubmit={props.handleSubmit}>
     <input
       type="text"
       name="author"

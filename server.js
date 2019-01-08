@@ -9,7 +9,6 @@ const app = express();
 const users = require("./routes/api/users");
 const commentbox = require("./routes/api/commentbox");
 
-app.use(cors());
 app.use(
   bodyParser.urlencoded({
     extended: false
@@ -17,6 +16,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(logger("dev"));
+app.use(cors());
 
 // connect mongodb
 const db = require("./config/keys").MongoURI;
