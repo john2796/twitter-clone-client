@@ -29,11 +29,11 @@ if (localStorage.jwtToken) {
   }
 }
 
-class App extends Component {
+class LoginContainer extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <div className="LoginContainer">
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
@@ -45,4 +45,4 @@ class App extends Component {
     );
   }
 }
-export default App;
+export default LoginContainer;

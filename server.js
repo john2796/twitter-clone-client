@@ -30,8 +30,8 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 app.use("/api/users", users);
 
-const port = process.env.PORT || 9000;
-app.listen(port, () => console.log(`server running on port ${port}`));
+const port = process.env.PORT || 5000;
+app.listen(5000, () => console.log(`server running on port ${port}`));
 
 // register http://localhost:9000/api/users/register
 // login http://localhost:9000/api/users/login
