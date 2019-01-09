@@ -37,12 +37,6 @@ const FooterWrapper = styled.div`
 `;
 
 class Footer extends Component {
-  state = {
-    isLiked: false,
-    likes: 10,
-    isComment: false
-  };
-
   likedHandler = () => {
     const { isLiked } = this.state;
     this.setState(prevState => {
