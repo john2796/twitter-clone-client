@@ -13,7 +13,11 @@ const TextContent = styled.div`
 const Comment = props => (
   <div
     className="singleComment"
-    style={{ maxWidth: "500px", margin: "0 auto" }}
+    style={{
+      maxWidth: "500px",
+      margin: "20px auto",
+      borderBottom: "1px solid #E6E5E6"
+    }}
   >
     <TextContent className="textContent">
       <img

@@ -11,16 +11,17 @@ class CommentBox extends Component {
       data: [],
       error: null,
       text: "",
-      loading: true
+      isLoading: true
     };
     this.pollInterval = null;
   }
 
   componentDidMount() {
+    this.setState({ isLoading: true });
     this.loadCommentsFromServer();
-    // if (!this.pollInterval) {
-    //   this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
-    // }
+    if (!this.pollInterval) {
+      this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
+    }
   }
   componentWillMount() {
     if (this.pollInterval) clearInterval(this.pollInterval);
@@ -32,7 +33,7 @@ class CommentBox extends Component {
       .then(data => data.json())
       .then(res => {
         if (!res.success) this.setState({ error: res.error });
-        else this.setState({ data: res.data, loading: true });
+        else this.setState({ data: res.data, isLoading: false });
       });
   };
   onUpdateComment = id => {
@@ -116,20 +117,28 @@ class CommentBox extends Component {
   };
 
   render() {
-    const { data, text, error, loading } = this.state;
-    return (
-      <div>
+    const { data, text, error, isLoading } = this.state;
+    let comments;
+    if (isLoading) {
+      return (comments = (
+        <img
+          src="http://www.hemispheresud.com/wp-content/uploads/AAPL/loaders/Teddy%20Bear%20Loading.gif"
+          alt="loading"
+          style={{
+            width: "100%",
+            margin: "0 auto"
+          }}
+        />
+      ));
+    } else {
+      return (comments = (
         <div className="container">
           <div className="comments">
-            {loading ? (
-              <CommentList
-                data={data}
-                handleDeleteComment={this.onDeleteComment}
-                handleUpdateComment={this.onUpdateComment}
-              />
-            ) : (
-              <p>loading comments....</p>
-            )}
+            <CommentList
+              data={data}
+              handleDeleteComment={this.onDeleteComment}
+              handleUpdateComment={this.onUpdateComment}
+            />
           </div>
           <div className="form">
             <CommentForm
@@ -140,8 +149,9 @@ class CommentBox extends Component {
           </div>
           {error && <p>{error}</p>}
         </div>
-      </div>
-    );
+      ));
+    }
+    return <div>{comments}</div>;
   }
 }
 

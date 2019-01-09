@@ -39,7 +39,8 @@ const FooterWrapper = styled.div`
 class Footer extends Component {
   state = {
     isLiked: false,
-    likes: 10
+    likes: 10,
+    isComment: false
   };
 
   likedHandler = () => {
@@ -52,6 +53,14 @@ class Footer extends Component {
     });
   };
 
+  commentTogglerHandler = () => {
+    this.setState((state, props) => {
+      return {
+        isComment: !state.isComment
+      };
+    });
+  };
+
   render() {
     const { likes, isLiked } = this.state;
     const { comment, sync, heart, envelope, trash, deleteItem } = this.props;
@@ -59,7 +68,10 @@ class Footer extends Component {
       <FooterWrapper>
         <div className="footer-icons">
           <p>
-            <i className={`far fa-${comment}`} />
+            <i
+              className={`far fa-${comment}`}
+              onClick={this.commentTogglerHandler}
+            />
           </p>
           <p>
             <i className={`fas fa-${sync}-alt`} />
