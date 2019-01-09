@@ -10,11 +10,14 @@ export default function reducerName(state = initialState, action) {
   switch (action.type) {
     case TOGGLE_COMMENT:
       return {
-        ...state
+        ...state,
+        isComment: !state.isComment
       };
     case TOGGLE_HEART:
       return {
-        ...state
+        ...state,
+        isLiked: !state.isLiked,
+        likes: !state.isLiked ? (state.likes += 1) : (state.likes -= 1)
       };
     default:
       return state;

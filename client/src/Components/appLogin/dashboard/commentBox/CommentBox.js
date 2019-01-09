@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
 import "./CommentBox.css";
+import { connect } from "react-redux";
 
 class CommentBox extends Component {
   constructor(props) {
@@ -19,9 +20,9 @@ class CommentBox extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     this.loadCommentsFromServer();
-    if (!this.pollInterval) {
-      this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
-    }
+    // if (!this.pollInterval) {
+    //   this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
+    // }
   }
   componentWillMount() {
     if (this.pollInterval) clearInterval(this.pollInterval);
@@ -118,6 +119,7 @@ class CommentBox extends Component {
 
   render() {
     const { data, text, error, isLoading } = this.state;
+    const { isComment } = this.props.footer;
     let comments;
     if (isLoading) {
       return (comments = (
@@ -132,7 +134,10 @@ class CommentBox extends Component {
       ));
     } else {
       return (comments = (
-        <div className="container">
+        <div
+          className="container"
+          style={isComment ? { display: "none" } : { display: "block" }}
+        >
           <div className="comments">
             <CommentList
               data={data}
@@ -155,4 +160,8 @@ class CommentBox extends Component {
   }
 }
 
-export default CommentBox;
+const mapStateToProps = state => ({
+  footer: state.footer
+});
+
+export default connect(mapStateToProps)(CommentBox);

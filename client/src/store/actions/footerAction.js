@@ -1,15 +1,13 @@
 import { TOGGLE_COMMENT, TOGGLE_HEART } from "./types";
 
-export const likeTweets = param => {
+export const likeTweets = () => {
   return {
-    type: TOGGLE_COMMENT,
-    payload: param
+    type: TOGGLE_HEART
   };
 };
 
-export const toggleComment = param => {
+export const toggleComment = () => {
   return {
-    type: TOGGLE_HEART,
-    payload: param
+    type: TOGGLE_COMMENT
   };
 };

@@ -22,15 +22,13 @@ const CommentForm = props => (
 );
 
 CommentForm.propTypes = {
-  submitComment: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   handleChangeText: PropTypes.func.isRequired,
-  text: PropTypes.string,
-  author: PropTypes.string
+  text: PropTypes.string
 };
 
 CommentForm.defaultProps = {
-  text: "",
-  author: ""
+  text: ""
 };
 
 export default CommentForm;

@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import CommentBox from "../../../appLogin/dashboard/commentBox/CommentBox";
+import { connect } from "react-redux";
+import {
+  toggleComment,
+  likeTweets
+} from "../../../../store/actions/footerAction";
 
 const FooterWrapper = styled.div`
   @import url("https://use.fontawesome.com/releases/v5.5.0/css/all.css");
@@ -37,26 +42,16 @@ const FooterWrapper = styled.div`
 `;
 
 class Footer extends Component {
-  likedHandler = () => {
-    const { isLiked } = this.state;
-    this.setState(prevState => {
-      return {
-        isLiked: !prevState.isLiked,
-        likes: !isLiked ? (prevState.likes += 1) : (prevState.likes -= 1)
-      };
-    });
+  handlerLike = () => {
+    this.props.likeTweets();
   };
 
-  commentTogglerHandler = () => {
-    this.setState((state, props) => {
-      return {
-        isComment: !state.isComment
-      };
-    });
+  handlerCommentToggler = () => {
+    this.props.toggleComment();
   };
 
   render() {
-    const { likes, isLiked } = this.state;
+    const { likes, isLiked } = this.props.footer;
     const { comment, sync, heart, envelope, trash, deleteItem } = this.props;
     return (
       <FooterWrapper>
@@ -64,7 +59,7 @@ class Footer extends Component {
           <p>
             <i
               className={`far fa-${comment}`}
-              onClick={this.commentTogglerHandler}
+              onClick={this.handlerCommentToggler}
             />
           </p>
           <p>
@@ -74,7 +69,7 @@ class Footer extends Component {
           <p>
             <i
               className={`fas fa-${heart}`}
-              onClick={this.likedHandler}
+              onClick={this.handlerLike}
               style={isLiked ? { color: "red" } : { color: "gray" }}
             />
             <span>{likes}</span>
@@ -93,4 +88,11 @@ class Footer extends Component {
   }
 }
 
-export default Footer;
+const mapStateToProps = state => ({
+  footer: state.footer
+});
+
+export default connect(
+  mapStateToProps,
+  { likeTweets, toggleComment }
+)(Footer);
