@@ -9,6 +9,10 @@ const Comment = props => (
       alt="user_image"
       className="userImage"
       src={`https://picsum.photos/70?random=${props.id}`}
+      style={{
+        borderRadius: "50%",
+        width: "30px"
+      }}
     />
     <div className="textContent">
       <div className="singleCommentContent">
@@ -16,6 +20,7 @@ const Comment = props => (
         <ReactMarkdown source={props.children} />
       </div>
       <div className="singleCommentButtons">
+        <span className="time">{moment(props.timestamp).fromNow()}</span>
         <a
           onClick={() => {
             props.handleUpdateComment(props.id);

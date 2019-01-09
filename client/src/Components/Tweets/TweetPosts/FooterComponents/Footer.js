@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import CommentBox from "../../../appLogin/dashboard/commentBox/CommentBox";
 
 const FooterWrapper = styled.div`
   @import url("https://use.fontawesome.com/releases/v5.5.0/css/all.css");
-  max-width: 500px;
-  margin: 0 auto;
-  display: flex;
+  .footer-icons {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+  }
   p {
     color: gray;
     padding: 10px 0 10px 0;
@@ -54,27 +57,31 @@ class Footer extends Component {
     const { comment, sync, heart, envelope, trash, deleteItem } = this.props;
     return (
       <FooterWrapper>
-        <p>
-          <i className={`far fa-${comment}`} />
-        </p>
-        <p>
-          <i className={`fas fa-${sync}-alt`} />
-          <span>6</span>
-        </p>
-        <p>
-          <i
-            className={`fas fa-${heart}`}
-            onClick={this.likedHandler}
-            style={isLiked ? { color: "red" } : { color: "gray" }}
-          />
-          <span>{likes}</span>
-        </p>
-        <p>
-          <i className={`far fa-${envelope}`} />
-        </p>
-        <p onClick={deleteItem}>
-          <i className={`fas fa-${trash}-alt`} />
-        </p>
+        <div className="footer-icons">
+          <p>
+            <i className={`far fa-${comment}`} />
+          </p>
+          <p>
+            <i className={`fas fa-${sync}-alt`} />
+            <span>6</span>
+          </p>
+          <p>
+            <i
+              className={`fas fa-${heart}`}
+              onClick={this.likedHandler}
+              style={isLiked ? { color: "red" } : { color: "gray" }}
+            />
+            <span>{likes}</span>
+          </p>
+          <p>
+            <i className={`far fa-${envelope}`} />
+          </p>
+          <p onClick={deleteItem}>
+            <i className={`fas fa-${trash}-alt`} />
+          </p>
+        </div>
+
+        <CommentBox />
       </FooterWrapper>
     );
   }

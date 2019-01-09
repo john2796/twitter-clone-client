@@ -19,15 +19,14 @@ router.get("/comments", (req, res) => {
 // @access  Public
 router.post("/comments", (req, res) => {
   const comment = new Comment();
-  const { author, text } = req.body;
-  if (!author || !text) {
+  const { text } = req.body;
+  if (!text) {
     //we should throw an error, we can do this check on the fron edn
     return res.json({
       success: false,
-      error: "You must provide an author and comment"
+      error: "You must provide an  comment"
     });
   }
-  comment.author = author;
   comment.text = text;
   comment.save(err => {
     if (err) return res.json({ success: false, error: err });
@@ -44,8 +43,7 @@ router.put("/comments/:commentId", (req, res) => {
   }
   Comment.findById(commentId, (error, comment) => {
     if (error) return res.json({ success: false, error });
-    const { author, text } = req.body;
-    if (author) comment.author = author;
+    const { text } = req.body;
     if (text) comment.text = text;
     comment.save(error => {
       if (error) return res.json({ success: false, error });

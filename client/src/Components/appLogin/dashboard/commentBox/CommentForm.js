@@ -6,17 +6,10 @@ const CommentForm = props => (
   <form onSubmit={props.handleSubmit}>
     <input
       type="text"
-      name="author"
-      placeholder="Your name…"
-      value={props.author}
-      onChange={props.handleChangeText}
-    />
-    <input
-      type="text"
       name="text"
-      placeholder="Say something..."
+      placeholder="Write a comment..."
       value={props.text}
-      onChange={props.handleTextChange}
+      onChange={props.handleChangeText}
     />
     <button type="submit">Submit</button>
   </form>
