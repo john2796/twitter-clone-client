@@ -10,16 +10,17 @@ class CommentBox extends Component {
     this.state = {
       data: [],
       error: null,
-      text: ""
+      text: "",
+      loading: true
     };
     this.pollInterval = null;
   }
 
   componentDidMount() {
     this.loadCommentsFromServer();
-    if (!this.pollInterval) {
-      this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
-    }
+    // if (!this.pollInterval) {
+    //   this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
+    // }
   }
   componentWillMount() {
     if (this.pollInterval) clearInterval(this.pollInterval);
@@ -31,7 +32,7 @@ class CommentBox extends Component {
       .then(data => data.json())
       .then(res => {
         if (!res.success) this.setState({ error: res.error });
-        else this.setState({ data: res.data });
+        else this.setState({ data: res.data, loading: true });
       });
   };
   onUpdateComment = id => {
@@ -115,17 +116,20 @@ class CommentBox extends Component {
   };
 
   render() {
-    const { data, text, error } = this.state;
-
+    const { data, text, error, loading } = this.state;
     return (
       <div>
         <div className="container">
           <div className="comments">
-            <CommentList
-              data={data}
-              handleDeleteComment={this.onDeleteComment}
-              handleUpdateComment={this.onUpdateComment}
-            />
+            {loading ? (
+              <CommentList
+                data={data}
+                handleDeleteComment={this.onDeleteComment}
+                handleUpdateComment={this.onUpdateComment}
+              />
+            ) : (
+              <p>loading comments....</p>
+            )}
           </div>
           <div className="form">
             <CommentForm

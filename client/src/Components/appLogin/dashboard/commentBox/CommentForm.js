@@ -3,7 +3,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const CommentForm = props => (
-  <form onSubmit={props.handleSubmit}>
+  <form
+    onSubmit={props.handleSubmit}
+    style={{
+      maxWidth: "500px",
+      margin: "0 auto"
+    }}
+  >
     <input
       type="text"
       name="text"
