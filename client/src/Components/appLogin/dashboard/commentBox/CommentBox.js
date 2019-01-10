@@ -22,6 +22,23 @@ class CommentBox extends Component {
     this.pollInterval = null;
   }
 
+  onChangeText = e => {
+    const newState = { ...this.state };
+    newState[e.target.name] = e.target.value;
+    this.setState(newState);
+  };
+
+  submitComment = e => {
+    e.preventDefault();
+    const { text, updateId } = this.state;
+    if (!text) return;
+    if (updateId) {
+      this.submitUpdatedComment();
+    } else {
+      this.submitNewComment();
+    }
+  };
+
   render() {
     const { data, text, error, isLoading } = this.state;
     const { isComment } = this.props.footer;

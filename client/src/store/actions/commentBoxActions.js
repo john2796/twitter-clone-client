@@ -1,3 +1,10 @@
+import {
+  DELETE_COMMENT,
+  ADD_COMMENT,
+  UPDATE_COMMENT,
+  LOADING_COMMENT
+} from "./types";
+
 loadCommentsFromServer = () => {
   fetch(`http://localhost:5000/api/comments`)
     .then(data => data.json())
@@ -29,23 +36,7 @@ onDeleteComment = id => {
     });
 };
 
-onChangeText = e => {
-  const newState = { ...this.state };
-  newState[e.target.name] = e.target.value;
-  this.setState(newState);
-};
-
-submitComment = e => {
-  e.preventDefault();
-  const { text, updateId } = this.state;
-  if (!text) return;
-  if (updateId) {
-    this.submitUpdatedComment();
-  } else {
-    this.submitNewComment();
-  }
-};
-
+//onSubmit
 submitNewComment = () => {
   const { text } = this.state;
   const data = [
@@ -71,6 +62,7 @@ submitNewComment = () => {
     });
 };
 
+//onSubmit
 submitUpdatedComment = () => {
   const { text, updateId } = this.state;
   fetch(`/api/comments/${updateId}`, {
@@ -84,4 +76,10 @@ submitUpdatedComment = () => {
         this.setState({ error: res.error.message || res.error });
       else this.setState({ text: "", updateId: null });
     });
+};
+
+export const setCommentLoading = () => {
+  return {
+    type: LOADING_COMMENT
+  };
 };
