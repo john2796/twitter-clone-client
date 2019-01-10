@@ -3,6 +3,7 @@ import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
 import "./CommentBox.css";
 import { connect } from "react-redux";
+import { loadCommentsFromServer } from "../../../../store/actions/commentBoxActions";
 
 class CommentBox extends Component {
   constructor(props) {
@@ -11,8 +12,8 @@ class CommentBox extends Component {
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true });
-    this.loadCommentsFromServer();
+    //this.setState({ isLoading: true });
+    this.props.loadCommentsFromServer();
 
     // if (!this.pollInterval) {
     //   this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
@@ -23,26 +24,27 @@ class CommentBox extends Component {
     this.pollInterval = null;
   }
 
-  onChangeText = e => {
-    const newState = { ...this.state };
-    newState[e.target.name] = e.target.value;
-    this.setState(newState);
-  };
+  // onChangeText = e => {
+  //   const newState = { ...this.state };
+  //   newState[e.target.name] = e.target.value;
+  //   this.setState(newState);
+  // };
 
-  submitComment = e => {
-    e.preventDefault();
-    const { text, updateId } = this.state;
-    if (!text) return;
-    if (updateId) {
-      this.submitUpdatedComment();
-    } else {
-      this.submitNewComment();
-    }
-  };
+  // submitComment = e => {
+  //   e.preventDefault();
+  //   const { text, updateId } = this.state;
+  //   if (!text) return;
+  //   if (updateId) {
+  //     this.submitUpdatedComment();
+  //   } else {
+  //     this.submitNewComment();
+  //   }
+  // };
 
   render() {
-    const { data, text, error, isLoading } = this.state;
+    const { data, text, error, isLoading } = this.props.comment;
     const { isComment } = this.props.footer;
+
     let comments;
     if (isLoading) {
       return (comments = (
@@ -84,7 +86,13 @@ class CommentBox extends Component {
 }
 
 const mapStateToProps = state => ({
-  footer: state.footer
+  footer: state.footer,
+  comment: state.comments
 });
 
-export default connect(mapStateToProps)(CommentBox);
+export default connect(
+  mapStateToProps,
+  {
+    loadCommentsFromServer
+  }
+)(CommentBox);
