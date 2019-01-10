@@ -21,8 +21,7 @@ CommentList.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
-      text: PropTypes.string,
-      updatedAt: PropTypes.string
+      text: PropTypes.string
     })
   ),
   handleDeleteComment: PropTypes.func.isRequired,

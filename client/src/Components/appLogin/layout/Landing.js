@@ -3,20 +3,26 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Title = styled.h2`
-  @import url("https://fonts.googleapis.com/css?family=Charm");
   font-size: 30px;
+`;
+
+const LandingWrapper = styled.div`
+  background: #f9fbfc;
+  height: 100vh;
+  width: 100vw;
 `;
 
 class Landing extends Component {
   render() {
     return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
+      <LandingWrapper className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
-            <Title>Instagram</Title>
+            <Title>Tweety Clone</Title>
             <img
-              src="https://ultimatemember.com/wp-content/uploads/bb-plugin/cache/instagram-circle.png"
+              src="https://i.gifer.com/TjRd.gif"
               alt="..."
+              style={{ borderRadius: "50%" }}
             />
             <br />
             <Link
@@ -44,7 +50,7 @@ class Landing extends Component {
             </Link>
           </div>
         </div>
-      </div>
+      </LandingWrapper>
     );
   }
 }

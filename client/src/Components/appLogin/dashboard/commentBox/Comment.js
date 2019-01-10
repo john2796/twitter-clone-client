@@ -33,7 +33,6 @@ const Comment = props => (
       <div className="singleCommentButtons">
         <span className="time">{moment(props.timestamp).fromNow()}</span>
         <a
-          href="..."
           onClick={() => {
             props.handleUpdateComment(props.id);
           }}
@@ -45,7 +44,6 @@ const Comment = props => (
           update
         </a>
         <a
-          href="..."
           alt="delete comment"
           onClick={() => {
             props.handleDeleteComment(props.id);
@@ -65,8 +63,7 @@ Comment.propTypes = {
   children: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   handleUpdateComment: PropTypes.func.isRequired,
-  handleDeleteComment: PropTypes.func.isRequired,
-  timestamp: PropTypes.string.isRequired
+  handleDeleteComment: PropTypes.func.isRequired
 };
 
 export default Comment;
