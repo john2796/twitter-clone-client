@@ -34,6 +34,7 @@ class Register extends Component {
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
+
   onSubmit = e => {
     e.preventDefault();
     const newUser = {
@@ -44,6 +45,7 @@ class Register extends Component {
     };
     this.props.registerUser(newUser, this.props.history);
   };
+
   render() {
     const { errors } = this.state;
     return (

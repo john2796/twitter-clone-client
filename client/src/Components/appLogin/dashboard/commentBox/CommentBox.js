@@ -13,6 +13,7 @@ class CommentBox extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     this.loadCommentsFromServer();
+
     // if (!this.pollInterval) {
     //   this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
     // }

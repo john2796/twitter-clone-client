@@ -2,15 +2,19 @@ import {
   DELETE_COMMENT,
   ADD_COMMENT,
   UPDATE_COMMENT,
-  LOADING_COMMENT
+  LOADING_COMMENT,
+  LOAD_COMMENTS
 } from "./types";
 
-loadCommentsFromServer = () => {
+export const loadCommentsFromServer = () => dispatch => {
   fetch(`http://localhost:5000/api/comments`)
     .then(data => data.json())
     .then(res => {
       if (!res.success) this.setState({ error: res.error });
       else this.setState({ data: res.data, isLoading: false });
+      dispatch({
+        type: LOAD_COMMENTS
+      });
     });
 };
 onUpdateComment = id => {
