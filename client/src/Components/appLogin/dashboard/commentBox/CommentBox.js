@@ -6,10 +6,10 @@ import { connect } from "react-redux";
 import { loadCommentsFromServer } from "../../../../store/actions/commentBoxActions";
 
 class CommentBox extends Component {
-  constructor(props) {
-    super(props);
-    this.pollInterval = null;
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.pollInterval = null;
+  // }
 
   componentDidMount() {
     //this.setState({ isLoading: true });
@@ -19,16 +19,16 @@ class CommentBox extends Component {
     //   this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
     // }
   }
-  componentWillMount() {
-    if (this.pollInterval) clearInterval(this.pollInterval);
-    this.pollInterval = null;
-  }
+  // componentWillMount() {
+  //   if (this.pollInterval) clearInterval(this.pollInterval);
+  //   this.pollInterval = null;
+  // }
 
-  // onChangeText = e => {
-  //   const newState = { ...this.state };
-  //   newState[e.target.name] = e.target.value;
-  //   this.setState(newState);
-  // };
+  onChangeText = e => {
+    const newState = { ...this.state };
+    newState[e.target.name] = e.target.value;
+    this.setState(newState);
+  };
 
   // submitComment = e => {
   //   e.preventDefault();
@@ -42,11 +42,11 @@ class CommentBox extends Component {
   // };
 
   render() {
-    const { data, text, error, isLoading } = this.props.comment;
+    const { data, text, error, fetchingComments } = this.props.comment;
     const { isComment } = this.props.footer;
-    console.log(data);
+
     let comments;
-    if (isLoading) {
+    if (fetchingComments) {
       return (comments = (
         <img
           src="http://www.hemispheresud.com/wp-content/uploads/AAPL/loaders/Teddy%20Bear%20Loading.gif"
