@@ -32,23 +32,21 @@ export const submitNewComment = (textValue, data) => disptch => {
     ...data,
     {
       text: textValue,
-      id: Date.now().toString(),
+      _id: Date.now().toString(),
       updatedAt: new Date(),
       createdAt: new Date()
     }
   ];
   //this.setState({ data });
-  dispatch({
+  disptch({
     type: POSTING_COMMENTS,
     payload: newData
   });
-  textValue = "";
+
   axios
-    .post(`${URL}comments`)
-    .then(({ data }) =>
-      dispatch({ type: POSTING_COMMENTS_SUCCESS, payload: textValue })
-    )
-    .catch(err => dispatch({ type: POSTING_COMMENTS_FAIL, payload: err }));
+    .post(URL, newData.textValue)
+    .then(({ data }) => disptch({ type: POSTING_COMMENTS_SUCCESS }))
+    .catch(err => disptch({ type: POSTING_COMMENTS_FAIL, payload: err }));
   // fetch("/api/comments", {
   //   method: "POST",
   //   headers: { "Content-Type": "application/json" },

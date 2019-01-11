@@ -32,13 +32,17 @@ export default function commentBoxReducers(state = initialState, action) {
       return { ...state, data: action.payload, fetchingComments: false };
     case FETCHING_COMMENTS_FAIL:
       return { ...state, fetchingComments: false, error: action.payload };
+
     //Posting comments
     case POSTING_COMMENTS:
-      return { ...state, addingComments: true };
+      return {
+        ...state,
+        addingComments: true,
+        data: action.payload
+      };
     case POSTING_COMMENTS_SUCCESS:
       return {
         ...state,
-        text: action.payload,
         error: null
       };
     case POSTING_COMMENTS_FAIL:

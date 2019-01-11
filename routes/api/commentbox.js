@@ -17,6 +17,7 @@ router.get("/comments", (req, res) => {
 // @route   POST api/commentbox/comments
 // @desc    Post comments
 // @access  Public
+//http://localhost:5000/api/comments
 router.post("/comments", (req, res) => {
   const comment = new Comment();
   const { text } = req.body;
@@ -36,6 +37,8 @@ router.post("/comments", (req, res) => {
 // @route   UPDATE api/commentbox/comments
 // @desc    Update comments
 // @access  Public
+//http://localhost:5000/api/comments/:commentId
+
 router.put("/comments/:commentId", (req, res) => {
   const { commentId } = req.params;
   if (!commentId) {
@@ -55,6 +58,7 @@ router.put("/comments/:commentId", (req, res) => {
 // @route   Delete api/commentbox/comments
 // @desc    Delete comments
 // @access  Public
+//http://localhost:5000/api/comments/:commentId
 router.delete("/comments/:commentId", (req, res) => {
   const { commentId } = req.params;
   if (!commentId) {
