@@ -16,9 +16,11 @@ const initialState = {
 export default function commentBoxReducers(state = initialState, action) {
   switch (action.type) {
     case GET_ITEMS:
+      console.log(state.isLoading);
       return {
         ...state,
-        data: action.payload
+        data: action.payload.data,
+        isLoading: action.payload.loading
       };
     // case ADD_COMMENT:
     //   return {

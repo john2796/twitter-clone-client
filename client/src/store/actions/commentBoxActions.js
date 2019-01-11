@@ -21,7 +21,10 @@ export const loadCommentsFromServer = () => dispatch => {
   axios.get(`http://localhost:5000/api/comments`).then(res =>
     dispatch({
       type: GET_ITEMS,
-      payload: res.data
+      payload: {
+        data: res.data,
+        loading: !false
+      }
     })
   );
 };

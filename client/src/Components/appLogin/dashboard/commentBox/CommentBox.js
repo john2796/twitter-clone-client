@@ -44,7 +44,7 @@ class CommentBox extends Component {
   render() {
     const { data, text, error, isLoading } = this.props.comment;
     const { isComment } = this.props.footer;
-
+    console.log(data);
     let comments;
     if (isLoading) {
       return (comments = (
