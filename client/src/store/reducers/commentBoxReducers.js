@@ -16,6 +16,7 @@ import {
 
 const initialState = {
   data: [],
+  text: "",
   fetchingComments: false,
   addingComments: false,
   updatingComments: false,

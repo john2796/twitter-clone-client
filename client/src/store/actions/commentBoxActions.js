@@ -27,38 +27,38 @@ export const loadCommentsFromServer = () => dispatch => {
     .catch(err => dispatch({ type: FETCHING_COMMENTS_FAIL, payload: err }));
 };
 // onSubmit;
-export const submitNewComment = (textValue, data) => disptch => {
+export const submitNewComment = (text, data) => dispatch => {
   const newData = [
     ...data,
     {
-      text: textValue,
+      text,
       _id: Date.now().toString(),
       updatedAt: new Date(),
       createdAt: new Date()
     }
   ];
   //this.setState({ data });
-  disptch({
+  dispatch({
     type: POSTING_COMMENTS,
     payload: newData
   });
 
   axios
-    .post(URL, newData.textValue)
-    .then(({ data }) => disptch({ type: POSTING_COMMENTS_SUCCESS }))
-    .catch(err => disptch({ type: POSTING_COMMENTS_FAIL, payload: err }));
-  // fetch("/api/comments", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify({ text })
-  // })
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     if (!res.success)
-  //       this.setState({ error: res.error.message || res.error });
-  //     else this.setState({ text: "", error: null });
-  //   });
+    .post("/api/comments", { text })
+    .then(res => dispatch({ type: POSTING_COMMENTS_SUCCESS }))
+    .catch(err => dispatch({ type: POSTING_COMMENTS_FAIL, payload: err }));
 };
+// fetch("/api/comments", {
+//   method: "POST",
+//   headers: { "Content-Type": "application/json" },
+//   body: JSON.stringify({ text })
+// })
+//   .then(res => res.json())
+//   .then(res => {
+//     if (!res.success)
+//       this.setState({ error: res.error.message || res.error });
+//     else this.setState({ text: "", error: null });
+//   });
 
 // onUpdateComment = id => {
 //   const oldComment = this.state.data.find(c => c._id === id);

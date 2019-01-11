@@ -11,10 +11,6 @@ import {
 class CommentBox extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      text: ""
-    };
     this.pollInterval = null;
   }
 
@@ -37,24 +33,29 @@ class CommentBox extends Component {
 
   submitComment = e => {
     e.preventDefault();
-    const { updateId, data } = this.props.comment;
-    const { text } = this.state;
+    const { updateId, data, text } = this.props.comment;
     this.props.submitNewComment(text, data);
-    this.setState({ text: "" });
-    console.log(data);
+    // console.log(data);
 
-    // if (!text) return;
-    // if (updateId) {
-    //   this.submitUpdatedComment();
-    // } else {
-    //   this.submitNewComment();
-    // }
+    // const newData = [
+    //   ...this.state.data,
+    //   {
+    //     text,
+    //     _id: Date.now().toString(),
+    //     updatedAt: new Date(),
+    //     createdAt: new Date()
+    //   }
+    // ];
+    // axios.post("/api/comments", { text }).then(res => {
+    //   if (!res.data.success)
+    //     this.setState({ error: res.data.error.message || res.data.error });
+    //   else this.setState({ text: "", error: null });
+    // });
   };
 
   render() {
-    const { data, error, fetchingComments } = this.props.comment;
+    const { data, error, fetchingComments, text } = this.props.comment;
     const { isComment } = this.props.footer;
-    const { text } = this.state;
 
     let comments;
     if (fetchingComments) {
