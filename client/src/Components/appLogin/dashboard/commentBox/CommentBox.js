@@ -3,13 +3,20 @@ import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
 import "./CommentBox.css";
 import { connect } from "react-redux";
-import { loadCommentsFromServer } from "../../../../store/actions/commentBoxActions";
+import {
+  loadCommentsFromServer,
+  submitNewComment
+} from "../../../../store/actions/commentBoxActions";
 
 class CommentBox extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.pollInterval = null;
-  // }
+  constructor(props) {
+    super(props);
+    this.pollInterval = null;
+
+    this.state = {
+      text: ""
+    };
+  }
 
   componentDidMount() {
     //this.setState({ isLoading: true });
@@ -25,21 +32,21 @@ class CommentBox extends Component {
   // }
 
   onChangeText = e => {
-    const newState = { ...this.state };
-    newState[e.target.name] = e.target.value;
-    this.setState(newState);
+    this.setState({ [e.target.name]: e.target.value });
   };
 
-  // submitComment = e => {
-  //   e.preventDefault();
-  //   const { text, updateId } = this.state;
-  //   if (!text) return;
-  //   if (updateId) {
-  //     this.submitUpdatedComment();
-  //   } else {
-  //     this.submitNewComment();
-  //   }
-  // };
+  submitComment = e => {
+    e.preventDefault();
+    const { submitNewComment } = this.props;
+    const { updateId, data } = this.props.comment;
+
+    // if (!text) return;
+    // if (updateId) {
+    //   this.submitUpdatedComment();
+    // } else {
+    //   this.submitNewComment();
+    // }
+  };
 
   render() {
     const { data, text, error, fetchingComments } = this.props.comment;
@@ -93,6 +100,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    loadCommentsFromServer
+    loadCommentsFromServer,
+    submitNewComment
   }
 )(CommentBox);

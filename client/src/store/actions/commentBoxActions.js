@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  TEXT_INPUT,
   FETCHING_COMMENTS,
   FETCHING_COMMENTS_SUCCESS,
   FETCHING_COMMENTS_FAIL,
@@ -14,7 +15,7 @@ import {
   DELETING_COMMENTS_SUCCESS
 } from "./types";
 
-const URL = "http://localhost:5000/api/comments";
+const URL = "http://localhost:5000/api/comments/";
 
 export const loadCommentsFromServer = () => dispatch => {
   dispatch({ type: FETCHING_COMMENTS });
@@ -24,6 +25,41 @@ export const loadCommentsFromServer = () => dispatch => {
       dispatch({ type: FETCHING_COMMENTS_SUCCESS, payload: data.data })
     )
     .catch(err => dispatch({ type: FETCHING_COMMENTS_FAIL, payload: err }));
+};
+// onSubmit;
+export const submitNewComment = (textValue, data) => disptch => {
+  const newData = [
+    ...data,
+    {
+      text: textValue,
+      id: Date.now().toString(),
+      updatedAt: new Date(),
+      createdAt: new Date()
+    }
+  ];
+  //this.setState({ data });
+  dispatch({
+    type: POSTING_COMMENTS,
+    payload: newData
+  });
+  textValue = "";
+  axios
+    .post(`${URL}comments`)
+    .then(({ data }) =>
+      dispatch({ type: POSTING_COMMENTS_SUCCESS, payload: textValue })
+    )
+    .catch(err => dispatch({ type: POSTING_COMMENTS_FAIL, payload: err }));
+  // fetch("/api/comments", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ text })
+  // })
+  //   .then(res => res.json())
+  //   .then(res => {
+  //     if (!res.success)
+  //       this.setState({ error: res.error.message || res.error });
+  //     else this.setState({ text: "", error: null });
+  //   });
 };
 
 // onUpdateComment = id => {
@@ -46,32 +82,6 @@ export const loadCommentsFromServer = () => dispatch => {
 //     .then(res => res.json())
 //     .then(res => {
 //       if (!res.success) this.setState({ error: res.error });
-//     });
-// };
-
-// //onSubmit
-// submitNewComment = () => {
-//   const { text } = this.state;
-//   const data = [
-//     ...this.state.data,
-//     {
-//       text,
-//       _id: Date.now().toString(),
-//       updatedAt: new Date(),
-//       createdAt: new Date()
-//     }
-//   ];
-//   this.setState({ data });
-//   fetch("/api/comments", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ text })
-//   })
-//     .then(res => res.json())
-//     .then(res => {
-//       if (!res.success)
-//         this.setState({ error: res.error.message || res.error });
-//       else this.setState({ text: "", error: null });
 //     });
 // };
 
