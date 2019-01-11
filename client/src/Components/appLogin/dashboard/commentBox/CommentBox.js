@@ -11,6 +11,10 @@ import {
 class CommentBox extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      text: ""
+    };
     this.pollInterval = null;
   }
 
@@ -33,7 +37,8 @@ class CommentBox extends Component {
 
   submitComment = e => {
     e.preventDefault();
-    const { updateId, data, text } = this.props.comment;
+    const { updateId, data } = this.props.comment;
+    const { text } = this.state;
     this.props.submitNewComment(text, data);
     // console.log(data);
 
@@ -54,8 +59,9 @@ class CommentBox extends Component {
   };
 
   render() {
-    const { data, error, fetchingComments, text } = this.props.comment;
+    const { data, error, fetchingComments } = this.props.comment;
     const { isComment } = this.props.footer;
+    const { text } = this.state;
 
     let comments;
     if (fetchingComments) {

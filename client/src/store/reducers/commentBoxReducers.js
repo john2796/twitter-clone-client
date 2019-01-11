@@ -16,7 +16,6 @@ import {
 
 const initialState = {
   data: [],
-  text: "",
   fetchingComments: false,
   addingComments: false,
   updatingComments: false,
@@ -42,6 +41,7 @@ export default function commentBoxReducers(state = initialState, action) {
         data: action.payload
       };
     case POSTING_COMMENTS_SUCCESS:
+      console.log(state.data);
       return {
         ...state,
         error: null

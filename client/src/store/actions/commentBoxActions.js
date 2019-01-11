@@ -44,7 +44,7 @@ export const submitNewComment = (text, data) => dispatch => {
   });
 
   axios
-    .post("/api/comments", { text })
+    .post(URL, { text })
     .then(res => dispatch({ type: POSTING_COMMENTS_SUCCESS }))
     .catch(err => dispatch({ type: POSTING_COMMENTS_FAIL, payload: err }));
 };
