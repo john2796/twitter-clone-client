@@ -10,7 +10,7 @@ const TextContent = styled.div`
   justify-content: left;
 `;
 
-const Comment = props => (
+const Comment = ({ id, handleDelete, handleUpdate, timestamp, children }) => (
   <div
     className="singleComment"
     style={{
@@ -23,7 +23,7 @@ const Comment = props => (
       <img
         alt="user_image"
         className="userImage"
-        src={`https://picsum.photos/70?random=${props.id}`}
+        src={`https://picsum.photos/70?random=${id}`}
         style={{
           borderRadius: "50%",
           width: "30px",
@@ -31,10 +31,10 @@ const Comment = props => (
         }}
       />
       <div className="singleCommentButtons">
-        <span className="time">{moment(props.timestamp).fromNow()}</span>
+        <span className="time">{moment(timestamp).fromNow()}</span>
         <a
           onClick={() => {
-            props.handleUpdateComment(props.id);
+            handleUpdate(id);
           }}
           style={{
             margin: "0 20px"
@@ -46,7 +46,7 @@ const Comment = props => (
         <a
           alt="delete comment"
           onClick={() => {
-            props.handleDelete(props.id);
+            handleDelete(id);
           }}
         >
           delete
@@ -54,16 +54,16 @@ const Comment = props => (
       </div>
     </TextContent>
     <div className="singleCommentContent">
-      <ReactMarkdown source={props.children} />
+      <ReactMarkdown source={children} />
     </div>
   </div>
 );
 
 Comment.propTypes = {
   children: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  handleUpdateComment: PropTypes.func.isRequired,
-  handleDeleteComment: PropTypes.func.isRequired
+  id: PropTypes.string.isRequired
+  //handleUpdateComment: PropTypes.func.isRequired,
+  //handleDeleteComment: PropTypes.func.isRequired
 };
 
 export default Comment;

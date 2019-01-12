@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-  TEXT_INPUT,
+  ONUPDATECOMMENT,
   FETCHING_COMMENTS,
   FETCHING_COMMENTS_SUCCESS,
   FETCHING_COMMENTS_FAIL,
@@ -26,8 +26,6 @@ export const loadCommentsFromServer = () => dispatch => {
     )
     .catch(err => dispatch({ type: FETCHING_COMMENTS_FAIL, payload: err }));
 };
-// onSubmit;
-
 export const onDeleteComment = (id, data) => dispatch => {
   const filteredData = data.filter(c => c._id !== id);
   dispatch({
@@ -39,7 +37,6 @@ export const onDeleteComment = (id, data) => dispatch => {
     .then(res => console.log(res.data))
     .catch(err => dispatch({ type: DELETING_COMMENTS_FAIL, payload: err }));
 };
-
 export const submitNewComment = (text, data) => dispatch => {
   const newData = [
     ...data,
@@ -59,28 +56,33 @@ export const submitNewComment = (text, data) => dispatch => {
     .then(res => dispatch({ type: POSTING_COMMENTS_SUCCESS }))
     .catch(err => dispatch({ type: POSTING_COMMENTS_FAIL, payload: err }));
 };
-
-onUpdateComment = id => {
-  const oldComment = this.state.data.find(c => c._id === id);
+export const onUpdateComment = (id, data) => dispatch => {
+  const oldComment = data.find(c => c._id === id);
   if (!oldComment) return;
-  this.setState({
-    text: oldComment.text,
-    updateId: id
+  dispatch({
+    type: ONUPDATECOMMENT,
+    payload: {
+      text: oldComment.text,
+      updatedId: id
+    }
   });
 };
 
 //onSubmit
-submitUpdatedComment = () => {
-  const { text, updateId } = this.state;
-  fetch(`/api/comments/${updateId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text })
-  })
-    .then(res => res.json())
-    .then(res => {
-      if (!res.success)
-        this.setState({ error: res.error.message || res.error });
-      else this.setState({ text: "", updateId: null });
-    });
+export const submitUpdatedComment = (text, updatedId) => dispatch => {
+  // fetch(`/api/comments/${updatedId}`, {
+  //   method: "PUT",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ text })
+  // })
+  //   .then(res => res.json())
+  //   .then(res => {
+  //     if (!res.success) dispatch({ error: res.error.message || res.error });
+  //     else dispatch({ text: "", updateId: null });
+  //   });
+
+  axios
+    .put(`/api/comments/${updatedId}`, { text })
+    .then(res => dispatch({ type: UPDATE_COMMENTS_SUCCESS }))
+    .catch(err => dispatch({ type: UPDATE_COMMENTS_FAIL, payload: err }));
 };

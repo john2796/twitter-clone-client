@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Comment from "./Comment";
 
-const CommentList = props => {
-  const commentNodes = props.data.map(comment => (
+const CommentList = ({ data, handleUpdate, handleDelete }) => {
+  const commentNodes = data.map(comment => (
     <Comment
       key={comment._id}
       id={comment._id}
       timestamp={comment.updatedAt}
-      handleUpdateComment={props.handleUpdateComment}
-      handleDelete={props.handleDelete}
+      handleUpdate={handleUpdate}
+      handleDelete={handleDelete}
     >
       {comment.text}
     </Comment>
@@ -24,8 +24,8 @@ CommentList.propTypes = {
       text: PropTypes.string
     })
   ),
-  handleDeleteComment: PropTypes.func.isRequired,
-  handleUpdateComment: PropTypes.func.isRequired
+  handleDeleteComment: PropTypes.func.isRequired
+  //  handleUpdateComment: PropTypes.func.isRequired
 };
 
 CommentList.defaultProps = {

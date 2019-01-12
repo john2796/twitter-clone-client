@@ -6,7 +6,9 @@ import { connect } from "react-redux";
 import {
   loadCommentsFromServer,
   submitNewComment,
-  onDeleteComment
+  onDeleteComment,
+  onUpdateComment,
+  submitUpdatedComment
 } from "../../../../store/actions/commentBoxActions";
 
 class CommentBox extends Component {
@@ -39,12 +41,24 @@ class CommentBox extends Component {
     e.preventDefault();
     const { updateId, data } = this.props.comment;
     const { text } = this.state;
-    //this.props.submitNewComment(text, data);
+
+    if (!text) return;
+    if (updateId) {
+      this.props.submitUpdatedComment(this.props.comment.text, updateId);
+    } else {
+      this.props.submitNewComment(text, data);
+    }
   };
 
   handleDelete = id => {
     const idx = id;
     this.props.onDeleteComment(idx, this.props.comment.data);
+    console.log("deleted");
+  };
+
+  handleUpdate = id => {
+    const { data } = this.props.comment;
+    this.props.onUpdateComment(id, data);
   };
 
   render() {
@@ -74,7 +88,7 @@ class CommentBox extends Component {
             <CommentList
               data={data}
               handleDelete={this.handleDelete}
-              handleUpdateComment={this.onUpdateComment}
+              handleUpdate={this.handleUpdate}
             />
           </div>
           <div className="form">
@@ -102,6 +116,8 @@ export default connect(
   {
     loadCommentsFromServer,
     submitNewComment,
-    onDeleteComment
+    onDeleteComment,
+    onUpdateComment,
+    submitUpdatedComment
   }
 )(CommentBox);
