@@ -46,7 +46,7 @@ const Comment = props => (
         <a
           alt="delete comment"
           onClick={() => {
-            props.handleDeleteComment(props.id);
+            props.handleDelete(props.id);
           }}
         >
           delete

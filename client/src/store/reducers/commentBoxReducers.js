@@ -49,12 +49,12 @@ export default function commentBoxReducers(state = initialState, action) {
     case POSTING_COMMENTS_FAIL:
       return { ...state, error: action.payload, addingComments: false };
 
-    // case DELETING_COMMENTS:
-    //   return { ...state, deletingCOMMENTS: true };
-    // case DELETING_COMMENTS_SUCCESS:
-    //   return { ...state, COMMENTSs: action.payload };
-    // case DELETING_COMMENTS_FAIL:
-    //   return { ...state, error: action.payload };
+    case DELETING_COMMENTS:
+      return { ...state, deletingComments: true };
+    case DELETING_COMMENTS_SUCCESS:
+      return { ...state, data: action.payload };
+    case DELETING_COMMENTS_FAIL:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

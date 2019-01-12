@@ -27,6 +27,19 @@ export const loadCommentsFromServer = () => dispatch => {
     .catch(err => dispatch({ type: FETCHING_COMMENTS_FAIL, payload: err }));
 };
 // onSubmit;
+
+export const onDeleteComment = (id, data) => dispatch => {
+  const filteredData = data.filter(c => c._id !== id);
+  dispatch({
+    type: DELETING_COMMENTS_SUCCESS,
+    payload: filteredData
+  });
+  axios
+    .delete(`api/comments/${id}`)
+    .then(res => console.log(res.data))
+    .catch(err => dispatch({ type: DELETING_COMMENTS_FAIL, payload: err }));
+};
+
 export const submitNewComment = (text, data) => dispatch => {
   const newData = [
     ...data,
@@ -37,64 +50,37 @@ export const submitNewComment = (text, data) => dispatch => {
       createdAt: new Date()
     }
   ];
-  //this.setState({ data });
   dispatch({
     type: POSTING_COMMENTS,
     payload: newData
   });
-
   axios
     .post(URL, { text })
     .then(res => dispatch({ type: POSTING_COMMENTS_SUCCESS }))
     .catch(err => dispatch({ type: POSTING_COMMENTS_FAIL, payload: err }));
 };
-// fetch("/api/comments", {
-//   method: "POST",
-//   headers: { "Content-Type": "application/json" },
-//   body: JSON.stringify({ text })
-// })
-//   .then(res => res.json())
-//   .then(res => {
-//     if (!res.success)
-//       this.setState({ error: res.error.message || res.error });
-//     else this.setState({ text: "", error: null });
-//   });
 
-// onUpdateComment = id => {
-//   const oldComment = this.state.data.find(c => c._id === id);
-//   if (!oldComment) return;
-//   this.setState({
-//     text: oldComment.text,
-//     updateId: id
-//   });
-// };
+onUpdateComment = id => {
+  const oldComment = this.state.data.find(c => c._id === id);
+  if (!oldComment) return;
+  this.setState({
+    text: oldComment.text,
+    updateId: id
+  });
+};
 
-// onDeleteComment = id => {
-//   const i = this.state.data.findIndex(c => c._id === id);
-//   const data = [
-//     ...this.state.data.slice(0, i),
-//     ...this.state.data.slice(i + 1)
-//   ];
-//   this.setState({ data });
-//   fetch(`api/comments/${id}`, { method: "DELETE" })
-//     .then(res => res.json())
-//     .then(res => {
-//       if (!res.success) this.setState({ error: res.error });
-//     });
-// };
-
-// //onSubmit
-// submitUpdatedComment = () => {
-//   const { text, updateId } = this.state;
-//   fetch(`/api/comments/${updateId}`, {
-//     method: "PUT",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ text })
-//   })
-//     .then(res => res.json())
-//     .then(res => {
-//       if (!res.success)
-//         this.setState({ error: res.error.message || res.error });
-//       else this.setState({ text: "", updateId: null });
-//     });
-// };
+//onSubmit
+submitUpdatedComment = () => {
+  const { text, updateId } = this.state;
+  fetch(`/api/comments/${updateId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text })
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (!res.success)
+        this.setState({ error: res.error.message || res.error });
+      else this.setState({ text: "", updateId: null });
+    });
+};

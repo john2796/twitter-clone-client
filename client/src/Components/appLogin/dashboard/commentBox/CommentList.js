@@ -9,7 +9,7 @@ const CommentList = props => {
       id={comment._id}
       timestamp={comment.updatedAt}
       handleUpdateComment={props.handleUpdateComment}
-      handleDeleteComment={props.handleDeleteComment}
+      handleDelete={props.handleDelete}
     >
       {comment.text}
     </Comment>

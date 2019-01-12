@@ -5,7 +5,8 @@ import "./CommentBox.css";
 import { connect } from "react-redux";
 import {
   loadCommentsFromServer,
-  submitNewComment
+  submitNewComment,
+  onDeleteComment
 } from "../../../../store/actions/commentBoxActions";
 
 class CommentBox extends Component {
@@ -17,7 +18,6 @@ class CommentBox extends Component {
     };
     this.pollInterval = null;
   }
-
   componentDidMount() {
     //this.setState({ isLoading: true });
     this.props.loadCommentsFromServer();
@@ -39,23 +39,12 @@ class CommentBox extends Component {
     e.preventDefault();
     const { updateId, data } = this.props.comment;
     const { text } = this.state;
-    this.props.submitNewComment(text, data);
-    // console.log(data);
+    //this.props.submitNewComment(text, data);
+  };
 
-    // const newData = [
-    //   ...this.state.data,
-    //   {
-    //     text,
-    //     _id: Date.now().toString(),
-    //     updatedAt: new Date(),
-    //     createdAt: new Date()
-    //   }
-    // ];
-    // axios.post("/api/comments", { text }).then(res => {
-    //   if (!res.data.success)
-    //     this.setState({ error: res.data.error.message || res.data.error });
-    //   else this.setState({ text: "", error: null });
-    // });
+  handleDelete = id => {
+    const idx = id;
+    this.props.onDeleteComment(idx, this.props.comment.data);
   };
 
   render() {
@@ -84,7 +73,7 @@ class CommentBox extends Component {
           <div className="comments">
             <CommentList
               data={data}
-              handleDeleteComment={this.onDeleteComment}
+              handleDelete={this.handleDelete}
               handleUpdateComment={this.onUpdateComment}
             />
           </div>
@@ -112,6 +101,7 @@ export default connect(
   mapStateToProps,
   {
     loadCommentsFromServer,
-    submitNewComment
+    submitNewComment,
+    onDeleteComment
   }
 )(CommentBox);
