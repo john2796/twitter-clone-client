@@ -83,7 +83,6 @@ class TweetsForm extends Component {
       });
     }, 1000);
   }
-  // second
   componentDidMount() {
     //check if the data exist ! and only load it if data does not exists
     if (!localStorage.getItem("items")) {
@@ -94,7 +93,7 @@ class TweetsForm extends Component {
       console.log("Using data from localStorage");
     }
   }
-
+  // second
   fetchData = () => {
     const newItem = this.state.currentItem;
     const items = [newItem, ...this.state.items];

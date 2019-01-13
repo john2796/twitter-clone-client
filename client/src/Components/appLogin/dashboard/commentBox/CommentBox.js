@@ -20,18 +20,18 @@ class CommentBox extends Component {
     };
     this.pollInterval = null;
   }
-  componentDidMount() {
-    //this.setState({ isLoading: true });
-    this.props.loadCommentsFromServer();
 
+  componentDidMount() {
+    this.props.loadCommentsFromServer();
     // if (!this.pollInterval) {
-    //   this.pollInterval = setInterval(this.loadCommentsFromServer, 2000);
+    //   this.pollInterval = setInterval(this.props.loadCommentsFromServer, 2000);
     // }
   }
-  // componentWillMount() {
-  //   if (this.pollInterval) clearInterval(this.pollInterval);
-  //   this.pollInterval = null;
-  // }
+  componentWillUpdate(nextProps, nextState) {}
+  componentWillUnmount() {
+    if (this.pollInterval) clearInterval(this.pollInterval);
+    this.pollInterval = null;
+  }
 
   onChangeText = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -39,15 +39,15 @@ class CommentBox extends Component {
 
   submitComment = e => {
     e.preventDefault();
-    const { updateId, data } = this.props.comment;
-    const { text } = this.state;
-
+    const { data } = this.props.comment;
+    const { text, updatedId } = this.state;
     if (!text) return;
-    if (updateId) {
-      this.props.submitUpdatedComment(this.props.comment.text, updateId);
+    if (updatedId) {
+      this.props.submitUpdatedComment(this.props.comment.text, updatedId);
     } else {
       this.props.submitNewComment(text, data);
     }
+    this.setState({ text: "" });
   };
 
   handleDelete = id => {
@@ -56,18 +56,39 @@ class CommentBox extends Component {
     console.log("deleted");
   };
 
-  handleUpdate = id => {
+  handleUpdates = id => {
     const { data } = this.props.comment;
     this.props.onUpdateComment(id, data);
+  };
+
+  handleUpdate = id => {
+    fetch(`http://localhost:5000/api/comments/${id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state)
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));
+    // const { data } = this.props.comment;
+    // const oldComment = data.find(c => c._id === id);
+    // if (!oldComment) return;
+    // this.setState({
+    //   author: oldComment.author,
+    //   text: oldComment.text,
+    // });
   };
 
   render() {
     const { data, error, fetchingComments } = this.props.comment;
     const { isComment } = this.props.footer;
     const { text } = this.state;
+    const testing = true;
 
     let comments;
-    if (fetchingComments) {
+    if (!testing) {
       return (comments = (
         <img
           src="http://www.hemispheresud.com/wp-content/uploads/AAPL/loaders/Teddy%20Bear%20Loading.gif"

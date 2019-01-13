@@ -33,7 +33,7 @@ export const onDeleteComment = (id, data) => dispatch => {
     payload: filteredData
   });
   axios
-    .delete(`api/comments/${id}`)
+    .delete(`${URL}${id}`)
     .then(res => console.log(res.data))
     .catch(err => dispatch({ type: DELETING_COMMENTS_FAIL, payload: err }));
 };
@@ -70,19 +70,22 @@ export const onUpdateComment = (id, data) => dispatch => {
 
 //onSubmit
 export const submitUpdatedComment = (text, updatedId) => dispatch => {
-  // fetch(`/api/comments/${updatedId}`, {
-  //   method: "PUT",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify({ text })
-  // })
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     if (!res.success) dispatch({ error: res.error.message || res.error });
-  //     else dispatch({ text: "", updateId: null });
-  //   });
+  fetch(`${URL}${updatedId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ text })
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (!res.success) dispatch({ error: res.error.message || res.error });
+      else dispatch({ text: "", updateId: null });
+    });
 
-  axios
-    .put(`/api/comments/${updatedId}`, { text })
-    .then(res => dispatch({ type: UPDATE_COMMENTS_SUCCESS }))
-    .catch(err => dispatch({ type: UPDATE_COMMENTS_FAIL, payload: err }));
+  // axios
+  //   .put(`${URL}${updatedId}`, { text })
+  //   .then(res => dispatch({ type: UPDATE_COMMENTS_SUCCESS }))
+  //   .catch(err => dispatch({ type: UPDATE_COMMENTS_FAIL, payload: err }));
 };

@@ -10,7 +10,13 @@ const TextContent = styled.div`
   justify-content: left;
 `;
 
-const Comment = ({ id, handleDelete, handleUpdate, timestamp, children }) => (
+const Comment = ({
+  commentId,
+  handleDelete,
+  handleUpdate,
+  timestamp,
+  children
+}) => (
   <div
     className="singleComment"
     style={{
@@ -23,7 +29,7 @@ const Comment = ({ id, handleDelete, handleUpdate, timestamp, children }) => (
       <img
         alt="user_image"
         className="userImage"
-        src={`https://picsum.photos/70?random=${id}`}
+        src={`https://picsum.photos/70?random=${commentId}`}
         style={{
           borderRadius: "50%",
           width: "30px",
@@ -34,7 +40,7 @@ const Comment = ({ id, handleDelete, handleUpdate, timestamp, children }) => (
         <span className="time">{moment(timestamp).fromNow()}</span>
         <a
           onClick={() => {
-            handleUpdate(id);
+            handleUpdate(commentId);
           }}
           style={{
             margin: "0 20px"
@@ -46,7 +52,7 @@ const Comment = ({ id, handleDelete, handleUpdate, timestamp, children }) => (
         <a
           alt="delete comment"
           onClick={() => {
-            handleDelete(id);
+            handleDelete(commentId);
           }}
         >
           delete

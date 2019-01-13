@@ -6,7 +6,7 @@ const CommentList = ({ data, handleUpdate, handleDelete }) => {
   const commentNodes = data.map(comment => (
     <Comment
       key={comment._id}
-      id={comment._id}
+      commentId={comment._id}
       timestamp={comment.updatedAt}
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}

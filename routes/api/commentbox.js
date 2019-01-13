@@ -39,18 +39,27 @@ router.post("/comments", (req, res) => {
 // @access  Public
 //http://localhost:5000/api/comments/:commentId
 
-router.put("/comments/:commentId", (req, res) => {
-  const { commentId } = req.params;
+router.post("/comments/:commentId", (req, res) => {
+  const commentId = req.params.commentId;
   if (!commentId) {
-    return res.json({ success: false, error: "No comment id provided" });
+    return res
+      .status(422)
+      .json({ success: false, error: "No comment id provided" });
   }
-  Comment.findById(commentId, (error, comment) => {
+  Comment.findOne({ _id: commentId }, (error, comment) => {
     if (error) return res.json({ success: false, error });
-    const { text } = req.body;
+    const text = req.body.text;
+    // comment.text = text
     if (text) comment.text = text;
     comment.save(error => {
       if (error) return res.json({ success: false, error });
-      return res.json({ success: true });
+      Comment.find({}, (err, comment) => {
+        if (err) {
+          return res.status(401).json({ err: "failed to fetch comment" });
+        }
+        res.json(comment);
+      });
+      // return res.json({ success: true });
     });
   });
 });
