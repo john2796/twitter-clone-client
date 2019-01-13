@@ -23,9 +23,9 @@ class CommentBox extends Component {
 
   componentDidMount() {
     this.props.loadCommentsFromServer();
-    // if (!this.pollInterval) {
-    //   this.pollInterval = setInterval(this.props.loadCommentsFromServer, 2000);
-    // }
+    if (!this.pollInterval) {
+      this.pollInterval = setInterval(this.props.loadCommentsFromServer, 2000);
+    }
   }
   componentWillUpdate(nextProps, nextState) {}
   componentWillUnmount() {
@@ -39,11 +39,11 @@ class CommentBox extends Component {
 
   submitComment = e => {
     e.preventDefault();
-    const { data } = this.props.comment;
-    const { text, updatedId } = this.state;
+    const { data, updatedId } = this.props.comment;
+    const { text } = this.state;
     if (!text) return;
     if (updatedId) {
-      this.props.submitUpdatedComment(this.props.comment.text, updatedId);
+      this.props.submitUpdatedComment(updatedId, this.state);
     } else {
       this.props.submitNewComment(text, data);
     }
@@ -54,31 +54,6 @@ class CommentBox extends Component {
     const idx = id;
     this.props.onDeleteComment(idx, this.props.comment.data);
     console.log("deleted");
-  };
-
-  handleUpdates = id => {
-    const { data } = this.props.comment;
-    this.props.onUpdateComment(id, data);
-  };
-
-  handleUpdate = id => {
-    fetch(`http://localhost:5000/api/comments/${id}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state)
-    })
-      .then(res => res.json())
-      .then(data => console.log(data));
-    // const { data } = this.props.comment;
-    // const oldComment = data.find(c => c._id === id);
-    // if (!oldComment) return;
-    // this.setState({
-    //   author: oldComment.author,
-    //   text: oldComment.text,
-    // });
   };
 
   render() {
@@ -109,7 +84,7 @@ class CommentBox extends Component {
             <CommentList
               data={data}
               handleDelete={this.handleDelete}
-              handleUpdate={this.handleUpdate}
+              handleUpdates={this.handleUpdates}
             />
           </div>
           <div className="form">

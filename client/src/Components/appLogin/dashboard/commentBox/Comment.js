@@ -13,7 +13,7 @@ const TextContent = styled.div`
 const Comment = ({
   commentId,
   handleDelete,
-  handleUpdate,
+  handleUpdates,
   timestamp,
   children
 }) => (
@@ -40,7 +40,7 @@ const Comment = ({
         <span className="time">{moment(timestamp).fromNow()}</span>
         <a
           onClick={() => {
-            handleUpdate(commentId);
+            handleUpdates(commentId);
           }}
           style={{
             margin: "0 20px"

@@ -56,36 +56,3 @@ export const submitNewComment = (text, data) => dispatch => {
     .then(res => dispatch({ type: POSTING_COMMENTS_SUCCESS }))
     .catch(err => dispatch({ type: POSTING_COMMENTS_FAIL, payload: err }));
 };
-export const onUpdateComment = (id, data) => dispatch => {
-  const oldComment = data.find(c => c._id === id);
-  if (!oldComment) return;
-  dispatch({
-    type: ONUPDATECOMMENT,
-    payload: {
-      text: oldComment.text,
-      updatedId: id
-    }
-  });
-};
-
-//onSubmit
-export const submitUpdatedComment = (text, updatedId) => dispatch => {
-  fetch(`${URL}${updatedId}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ text })
-  })
-    .then(res => res.json())
-    .then(res => {
-      if (!res.success) dispatch({ error: res.error.message || res.error });
-      else dispatch({ text: "", updateId: null });
-    });
-
-  // axios
-  //   .put(`${URL}${updatedId}`, { text })
-  //   .then(res => dispatch({ type: UPDATE_COMMENTS_SUCCESS }))
-  //   .catch(err => dispatch({ type: UPDATE_COMMENTS_FAIL, payload: err }));
-};

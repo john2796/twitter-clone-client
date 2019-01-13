@@ -62,12 +62,13 @@ export default function commentBoxReducers(state = initialState, action) {
     case ONUPDATECOMMENT:
       return {
         ...state,
-        text: action.payload.text,
-        updatedId: action.payload.updatedId
+        text: action.payload.text
+        // updatedId: action.payload.updatedId
       };
     case UPDATE_COMMENTS_SUCCESS:
       return {
         ...state,
+        data: [...state.data, { text: action.payload }],
         error: null
       };
     case UPDATE_COMMENTS_FAIL:
